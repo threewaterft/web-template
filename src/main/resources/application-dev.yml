@@ -1,0 +1,78 @@
+
+spring:
+  #热部署配置，排除某些文件
+#  devtools:
+#    restart:
+#      exclude: application.yml,application-dev.yml
+  #自定义springboot启动banner
+  banner:
+    location: classpath:config/banner.txt
+  #定义静态资源路径
+  resources:
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/,classpath:/upload/
+  #数据源配置
+  datasource:
+    #http://localhost:8080/druid登陆，root/root
+    #driver-class-name: com.mysql.jdbc.Driver 可以不指定，自动探测
+    url: jdbc:mysql://148.70.209.238:3306/weixin?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    username: weixin
+    password: weixin
+    #定义数据源连接池类型
+    type: com.alibaba.druid.pool.DruidDataSource
+    #druid监控配置
+    filters: stat,wall,slf4j
+    dbcp2:
+      min-idle: 5         #数据库连接池的最小维持连接数
+      initial-size: 5     #初始化提供的连接数
+      max-total: 5          #最大的连接数
+      max-wait-millis: 200        #等待连接获取的最大超时时间
+mybatis:
+  #mybatis配置文件路径
+  config-location: classpath:mybatis-config.xml
+  #配置扫描实体类，可以直接在配置文件中指定，也可以配置在这里
+  #type-aliases-package: com.ch.bootproject.domain
+  #mapper-locations指定mapper xml文件路径
+  #mapper-locations: com.ch.bootproject.mapper
+
+# 分页配置
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+
+#更改tomcat端口
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+#打开指定包的调试语句日志打印
+#logging:
+#  level:
+#    root: info
+#    com.ch.bootproject.mapper: debug
+
+#自定义属性
+custom:
+  upload:
+    #自定义文件上传路径
+    path: C:\Users\CH\IdeaProjects\bootproject\src\main\resources\upload\
+    #自定义单个文件上传最大值，单位M
+    maxFileSize: 10
+    #自定义总文件上传最大值，单位M
+    maxReqSize: 100
+
+#Rocketmq配置---自定义
+apache:
+  rocketmq:
+    # 主题---自定义
+    topic: testTopic
+    # NameServer地址---自定义
+    namesrvAddr: 127.0.0.1:9876
+    consumer:
+      # 消费者的组名---自定义
+      PushConsumer: orderConsumer
+    producer:
+      # 生产者的组名---自定义
+      producerGroup: Producer

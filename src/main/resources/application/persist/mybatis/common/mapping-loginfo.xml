@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.threewater.cloud.service.LogService">
+  <resultMap id="BaseResultMap" type="com.threewater.cloud.po.LogInfo">
+    <result column="service_way" jdbcType="VARCHAR" property="serviceWay" />
+    <result column="trace_id" jdbcType="VARCHAR" property="traceId" />
+    <result column="trace_time" jdbcType="VARCHAR" property="traceTime" />
+    <result column="json_data" jdbcType="VARCHAR" property="data" />
+    <result column="sys_tx_code" jdbcType="VARCHAR" property="SYS_TX_CODE" />
+    <result column="transaction_id" jdbcType="VARCHAR" property="transaction_id" />
+    <result column="bk_status" jdbcType="VARCHAR" property="status" />
+    <result column="bk_code" jdbcType="VARCHAR" property="code" />
+    <result column="bk_desc" jdbcType="VARCHAR" property="msg" />
+  </resultMap>
+
+  <insert id="insertLog" parameterType="com.threewater.cloud.po.LogInfo">
+    insert into cobptrans_log (service_way, trace_id,trace_time,json_data,sys_tx_code,
+                               transaction_id,bk_status,bk_code,bk_desc)
+    values (#{serviceWay,jdbcType=VARCHAR},
+            #{traceId,jdbcType=VARCHAR},
+            #{traceTime,jdbcType=VARCHAR},
+            #{data,jdbcType=VARCHAR},
+            #{SYS_TX_CODE,jdbcType=VARCHAR},
+            #{transaction_id,jdbcType=VARCHAR},
+            #{status,jdbcType=VARCHAR},
+            #{code,jdbcType=VARCHAR},
+            #{msg,jdbcType=VARCHAR})
+  </insert>
+  <update id="updateLog" parameterType="com.threewater.cloud.po.LogInfo">
+    update cobptrans_log
+    <set>
+      <if test="status != null">
+        bk_status = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        bk_code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="msg != null">
+        bk_desc = #{msg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where trace_id = #{traceId,jdbcType=VARCHAR}
+  </update>
+
+</mapper>
