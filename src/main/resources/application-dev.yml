@@ -70,17 +70,20 @@ custom:
     maxFileSize: 10
     #自定义总文件上传最大值，单位M
     maxReqSize: 100
+  jwt:
+    secret: secret-three
+    expire: 3600
 
 #Rocketmq配置---自定义
-apache:
-  rocketmq:
-    # 主题---自定义
-    topic: testTopic
-    # NameServer地址---自定义
-    namesrvAddr: 127.0.0.1:9876
-    consumer:
-      # 消费者的组名---自定义
-      PushConsumer: orderConsumer
-    producer:
-      # 生产者的组名---自定义
-      producerGroup: Producer
+#apache:
+#  rocketmq:
+#    # 主题---自定义
+#    topic: testTopic
+#    # NameServer地址---自定义
+#    namesrvAddr: 127.0.0.1:9876
+#    consumer:
+#      # 消费者的组名---自定义
+#      PushConsumer: orderConsumer
+#    producer:
+#      # 生产者的组名---自定义
+#      producerGroup: Producer
