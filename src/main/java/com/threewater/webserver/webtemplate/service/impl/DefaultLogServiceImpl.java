@@ -1,4 +1,4 @@
-package com.threewater.webserver.webtemplate.service.service.impl;
+package com.threewater.webserver.webtemplate.service.impl;
 
 import com.threewater.webserver.webtemplate.service.LogService;
 import org.slf4j.Logger;

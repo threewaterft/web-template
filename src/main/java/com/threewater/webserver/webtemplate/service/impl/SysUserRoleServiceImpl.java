@@ -1,4 +1,4 @@
-package com.threewater.webserver.webtemplate.service.service.impl;
+package com.threewater.webserver.webtemplate.service.impl;
 
 import com.threewater.webserver.webtemplate.mapper.SysUserRoleMapper;
 import com.threewater.webserver.webtemplate.service.SysUserRoleService;
