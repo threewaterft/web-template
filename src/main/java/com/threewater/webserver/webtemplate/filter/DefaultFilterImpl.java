@@ -18,15 +18,15 @@ public class DefaultFilterImpl implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        log.info("doFilter...");
-        HttpServletRequest req = (HttpServletRequest)servletRequest;
-        HttpServletResponse res = (HttpServletResponse)servletResponse;
-
-        String token = req.getHeader("access_token");
-
-        log.info("access_token is "+token);
-
-        filterChain.doFilter(servletRequest,servletResponse);
+//        log.info("doFilter...");
+//        HttpServletRequest req = (HttpServletRequest)servletRequest;
+//        HttpServletResponse res = (HttpServletResponse)servletResponse;
+//
+//        String token = req.getHeader("access_token");
+//
+//        log.info("access_token is "+token);
+//
+//        filterChain.doFilter(servletRequest,servletResponse);
     }
 
     @Override

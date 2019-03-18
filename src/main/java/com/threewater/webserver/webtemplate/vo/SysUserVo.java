@@ -1,12 +1,20 @@
 package com.threewater.webserver.webtemplate.vo;
 
+import org.springframework.data.annotation.Id;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Table;
 import java.io.Serializable;
 
 public class SysUserVo implements Serializable {
     static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue
     private Integer id;
     private String name;
     private String password;
+
 
     public Integer getId() {
         return id;

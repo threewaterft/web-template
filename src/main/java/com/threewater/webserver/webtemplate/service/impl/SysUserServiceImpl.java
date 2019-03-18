@@ -20,4 +20,12 @@ public class SysUserServiceImpl implements SysUserService {
     public SysUserVo selectByName(String name) {
         return userMapper.selectByName(name);
     }
+
+    @Override
+    public boolean insertUser(SysUserVo sysUserVo) {
+        if(userMapper.insertUser(sysUserVo)>0)
+            return true;
+        else
+            return false;
+    }
 }

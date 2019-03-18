@@ -22,10 +22,10 @@ public class LoginController {
         return "home.html";
     }
 
-    @RequestMapping("/login")
-    public String showLogin() {
-        return "login.html";
-    }
+//    @RequestMapping("/login")
+//    public String showLogin() {
+//        return "login.html";
+//    }
 
     @RequestMapping("/admin")
     @ResponseBody
