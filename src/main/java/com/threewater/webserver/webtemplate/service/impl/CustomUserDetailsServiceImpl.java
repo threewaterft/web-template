@@ -41,7 +41,7 @@ public class CustomUserDetailsServiceImpl implements UserDetailsService {
         }
 
         // 添加权限
-        List<SysUserRoleVo> userRoles = userRoleService.listByUserId(2);
+        List<SysUserRoleVo> userRoles = userRoleService.listByUserId(user.getId());
 
         for (SysUserRoleVo userRole : userRoles) {
             SysRoleVo role = roleService.selectById(userRole.getRoleId());

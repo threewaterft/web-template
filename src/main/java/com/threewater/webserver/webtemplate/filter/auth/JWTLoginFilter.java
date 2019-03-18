@@ -1,6 +1,7 @@
 package com.threewater.webserver.webtemplate.filter.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.threewater.webserver.webtemplate.service.TokenAuthService;
 import com.threewater.webserver.webtemplate.vo.LoginUserVo;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -26,11 +27,16 @@ import java.util.Date;
  */
 public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
     private AuthenticationManager authenticationManager;
+    private TokenAuthService tokenAuthService;
 
     public JWTLoginFilter(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
     }
 
+    public JWTLoginFilter(AuthenticationManager authenticationManager,TokenAuthService tokenAuthService) {
+        this.authenticationManager = authenticationManager;
+        this.tokenAuthService = tokenAuthService;
+    }
     // 接收并解析用户凭证
     @Override
     public Authentication attemptAuthentication(HttpServletRequest req,
@@ -38,7 +44,6 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
         try {
             LoginUserVo user = new ObjectMapper()
                     .readValue(req.getInputStream(), LoginUserVo.class);
-
             return authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             user.getUsername(),
@@ -57,11 +62,7 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
                                             FilterChain chain,
                                             Authentication auth) throws IOException, ServletException {
 
-        String token = Jwts.builder()
-                .setSubject(((org.springframework.security.core.userdetails.User) auth.getPrincipal()).getUsername())
-                .setExpiration(new Date(System.currentTimeMillis() + 60 * 60 * 24 * 1000))
-                .signWith(SignatureAlgorithm.HS512, "MyJwtSecret")
-                .compact();
+        String token = tokenAuthService.createToken(auth,false);
         res.addHeader("Authorization", "Bearer " + token);
     }
 }

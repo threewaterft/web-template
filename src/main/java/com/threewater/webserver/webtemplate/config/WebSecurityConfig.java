@@ -3,6 +3,7 @@ package com.threewater.webserver.webtemplate.config;
 import com.threewater.webserver.webtemplate.config.encoder.DefaultPasswordEncoder;
 import com.threewater.webserver.webtemplate.filter.auth.JWTAuthenticationFilter;
 import com.threewater.webserver.webtemplate.filter.auth.JWTLoginFilter;
+import com.threewater.webserver.webtemplate.service.TokenAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -17,12 +18,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    public static final String AUTHORIZATION_HEADER = "Authorization";
-
-    public static final String AUTHORIZATION_TOKEN = "access_token";
-
     @Autowired
     private UserDetailsService userDetailsService;
+    @Autowired
+    private TokenAuthService tokenAuthService;
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 //        auth.inMemoryAuthentication().passwordEncoder(new DefaultPasswordEncoder())
@@ -41,8 +40,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                // 设置登陆成功页
 //                .defaultSuccessUrl("/").permitAll()
 //                .and()
-                .addFilter(new JWTLoginFilter(authenticationManager()))
-                .addFilter(new JWTAuthenticationFilter(authenticationManager()))
+                .addFilter(new JWTLoginFilter(authenticationManager(),tokenAuthService))
+                .addFilter(new JWTAuthenticationFilter(authenticationManager(),tokenAuthService))
                 .logout().permitAll();
         // 关闭CSRF跨域
         http.csrf().disable()
