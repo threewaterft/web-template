@@ -24,12 +24,14 @@ public class TokenAuthServiceImpl implements TokenAuthService {
     private String secretKey;//签名密钥
     private long tokenValidityInMilliseconds;//失效日期
     private long tokenValidityInMillisecondsForRememberMe;//（记住我）失效日期
+    private String tokenPrefix;
     @PostConstruct
     public void init() {
         this.secretKey = "threewaterdotcom";
         int secondIn1day = 1000 * 60 * 60 * 24;//一天
         this.tokenValidityInMilliseconds = secondIn1day * 2L;//两天
         this.tokenValidityInMillisecondsForRememberMe = secondIn1day * 7L;//7天
+        this.tokenPrefix="Bearer ";
     }
     @Override
     public String createToken(Authentication authentication, Boolean rememberMe) {
@@ -45,7 +47,7 @@ public class TokenAuthServiceImpl implements TokenAuthService {
             validity = new Date(now + this.tokenValidityInMillisecondsForRememberMe);
         }
 
-        return Jwts.builder()                                   //创建Token令牌
+        return tokenPrefix+Jwts.builder()                                   //创建Token令牌
                 .setSubject(authentication.getName())           //设置面向用户
                 .claim(AUTHORITIES_KEY,authorities)             //添加权限属性
                 .setExpiration(validity)                        //设置失效时间
@@ -55,6 +57,7 @@ public class TokenAuthServiceImpl implements TokenAuthService {
 
     @Override
     public Authentication getAuthentication(String token) {
+        token = token.replace(tokenPrefix,"");
         logger.debug("token:"+token);
         Claims claims = Jwts.parser()//解析Token的payload
                 .setSigningKey(secretKey)
@@ -71,6 +74,7 @@ public class TokenAuthServiceImpl implements TokenAuthService {
 
     @Override
     public boolean validateToken(String token) {
+        token = token.replace(tokenPrefix,"");
         try {
             Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);   //通过密钥验证Token
             return true;

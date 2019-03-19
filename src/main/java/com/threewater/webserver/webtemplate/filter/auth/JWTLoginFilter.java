@@ -63,6 +63,6 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
                                             Authentication auth) throws IOException, ServletException {
 
         String token = tokenAuthService.createToken(auth,false);
-        res.addHeader("Authorization", "Bearer " + token);
+        res.addHeader("Authorization", token);
     }
 }
