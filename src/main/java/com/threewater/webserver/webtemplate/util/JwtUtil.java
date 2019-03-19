@@ -18,9 +18,9 @@ import java.util.Map;
 public class JwtUtil {
     private static final Logger log = LoggerFactory.getLogger(JwtUtil.class);
 
-    @Value("custom.jwt.secret:secret-three")
+    @Value("${custom.jwt.secret:secret-three}")
     private String secret;
-    @Value("custom.jwt.expire:3600")
+    @Value("${custom.jwt.expire:3600}")
     private long expire;
 
     /**

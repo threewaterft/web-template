@@ -3,12 +3,14 @@ package com.threewater.webserver.webtemplate.filter.auth;
 import com.threewater.webserver.webtemplate.exception.CommonException;
 import com.threewater.webserver.webtemplate.service.TokenAuthService;
 import io.jsonwebtoken.Jwts;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import javax.naming.AuthenticationException;
 import javax.servlet.FilterChain;
@@ -26,12 +28,20 @@ import java.util.ArrayList;
  */
 public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
     private TokenAuthService tokenAuthService;
+
+    private HandlerExceptionResolver handlerExceptionResolver;
     public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
         super(authenticationManager);
     }
     public JWTAuthenticationFilter(AuthenticationManager authenticationManager,TokenAuthService tokenAuthService) {
         super(authenticationManager);
         this.tokenAuthService = tokenAuthService;
+    }
+
+    public JWTAuthenticationFilter(AuthenticationManager authenticationManager, TokenAuthService tokenAuthService, HandlerExceptionResolver handlerExceptionResolver) {
+        super(authenticationManager);
+        this.tokenAuthService = tokenAuthService;
+        this.handlerExceptionResolver = handlerExceptionResolver;
     }
 
     public JWTAuthenticationFilter(AuthenticationManager authenticationManager, AuthenticationEntryPoint authenticationEntryPoint) {
@@ -44,18 +54,21 @@ public class JWTAuthenticationFilter extends BasicAuthenticationFilter {
             chain.doFilter(request, response);
             return;
         }
-        Authentication authentication = getAuthentication(request);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        chain.doFilter(request, response);
-
+        Authentication authentication = getAuthentication(request, response);
+        if(authentication != null){
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            chain.doFilter(request, response);
+        }
     }
 
-    private Authentication getAuthentication(HttpServletRequest request) {
+    private Authentication getAuthentication(HttpServletRequest request, HttpServletResponse response) {
         String token = request.getHeader("Authorization");
         if (token != null) {
-            if(!tokenAuthService.validateToken(token))
-                throw new CommonException("TWFT0006");
-            return tokenAuthService.getAuthentication(token);
+            if(!tokenAuthService.validateToken(token)){
+                handlerExceptionResolver.resolveException(request, response, null, new CommonException("TWFT0006"));
+            }else {
+                return tokenAuthService.getAuthentication(token);
+            }
         }
         return null;
     }
