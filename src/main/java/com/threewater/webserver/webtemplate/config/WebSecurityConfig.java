@@ -5,6 +5,7 @@ import com.threewater.webserver.webtemplate.filter.auth.JWTAuthenticationFilter;
 import com.threewater.webserver.webtemplate.filter.auth.JWTLoginFilter;
 import com.threewater.webserver.webtemplate.service.TokenAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 
 @Configuration
 @EnableWebSecurity
@@ -22,6 +24,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private UserDetailsService userDetailsService;
     @Autowired
     private TokenAuthService tokenAuthService;
+    @Autowired
+    private HandlerExceptionResolver handlerExceptionResolver;
+
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 //        auth.inMemoryAuthentication().passwordEncoder(new DefaultPasswordEncoder())
@@ -41,7 +46,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .defaultSuccessUrl("/").permitAll()
 //                .and()
                 .addFilter(new JWTLoginFilter(authenticationManager(),tokenAuthService))
-                .addFilter(new JWTAuthenticationFilter(authenticationManager(),tokenAuthService))
+                .addFilter(new JWTAuthenticationFilter(authenticationManager(),tokenAuthService, handlerExceptionResolver))
                 .logout().permitAll();
         // 关闭CSRF跨域
         http.csrf().disable()
