@@ -3,10 +3,13 @@ package com.threewater.webserver.webtemplate.config;
 import com.threewater.webserver.webtemplate.config.encoder.DefaultPasswordEncoder;
 import com.threewater.webserver.webtemplate.filter.auth.JWTAuthenticationFilter;
 import com.threewater.webserver.webtemplate.filter.auth.JWTLoginFilter;
+import com.threewater.webserver.webtemplate.security.provider.InMemoryAuthenticationProvider;
 import com.threewater.webserver.webtemplate.service.TokenAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -15,6 +18,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.servlet.HandlerExceptionResolver;
+
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -26,13 +31,33 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private TokenAuthService tokenAuthService;
     @Autowired
     private HandlerExceptionResolver handlerExceptionResolver;
-
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.inMemoryAuthentication().passwordEncoder(new DefaultPasswordEncoder())
-//                .withUser("admin").password("123456").roles("USER");
-        auth.userDetailsService(userDetailsService).passwordEncoder(new DefaultPasswordEncoder());
+    InMemoryAuthenticationProvider inMemoryAuthenticationProvider;
+
+//    @Autowired
+//    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+////        auth.inMemoryAuthentication().passwordEncoder(new DefaultPasswordEncoder())
+////                .withUser("admin").password("123456").roles("USER");
+//        auth.userDetailsService(userDetailsService).passwordEncoder(new DefaultPasswordEncoder());
+//    }
+
+//    protected AuthenticationManager authenticationManager() throws Exception {
+//        ProviderManager authenticationManager = new ProviderManager(Arrays.asList(inMemoryAuthenticationProvider));
+//        System.out.println("there is "+authenticationManager.getProviders().size());
+//        //不擦除认证密码，擦除会导致TokenBasedRememberMeServices因为找不到Credentials再调用UserDetailsService而抛出UsernameNotFoundException
+//        authenticationManager.setEraseCredentialsAfterAuthentication(false);
+//        return authenticationManager;
+//    }
+
+
+    @Override
+    public void configure(AuthenticationManagerBuilder auth) throws Exception {
+
+        // auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
+        // 使用自定义身份验证组件
+        auth.authenticationProvider(inMemoryAuthenticationProvider);
     }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
