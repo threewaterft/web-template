@@ -16,7 +16,7 @@ public class JsonUtil {
     static {
         objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
         objectMapper.disable(SerializationFeature.FAIL_ON_EMPTY_BEANS);
-        objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+//        objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
     }
 
     public static <T> T str2obj(String jsonStr, Class<T> clazz){

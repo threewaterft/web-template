@@ -3,6 +3,7 @@ package com.threewater.webserver.webtemplate.config;
 import com.threewater.webserver.webtemplate.config.encoder.DefaultPasswordEncoder;
 import com.threewater.webserver.webtemplate.filter.auth.JWTAuthenticationFilter;
 import com.threewater.webserver.webtemplate.filter.auth.JWTLoginFilter;
+import com.threewater.webserver.webtemplate.filter.auth.WeChatLoginFilter;
 import com.threewater.webserver.webtemplate.security.provider.InMemoryAuthenticationProvider;
 import com.threewater.webserver.webtemplate.service.TokenAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import java.util.Arrays;
@@ -70,7 +72,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                // 设置登陆成功页
 //                .defaultSuccessUrl("/").permitAll()
 //                .and()
-                .addFilter(new JWTLoginFilter(authenticationManager(),tokenAuthService))
+                .addFilterBefore(new WeChatLoginFilter(authenticationManager(), tokenAuthService), UsernamePasswordAuthenticationFilter.class)
                 .addFilter(new JWTAuthenticationFilter(authenticationManager(),tokenAuthService, handlerExceptionResolver))
                 .logout().permitAll();
         // 关闭CSRF跨域
