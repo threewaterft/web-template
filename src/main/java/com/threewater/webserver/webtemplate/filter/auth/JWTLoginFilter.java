@@ -1,6 +1,7 @@
 package com.threewater.webserver.webtemplate.filter.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.threewater.webserver.webtemplate.exception.CommonException;
 import com.threewater.webserver.webtemplate.service.TokenAuthService;
 import com.threewater.webserver.webtemplate.vo.LoginUserVo;
 import io.jsonwebtoken.Jwts;
@@ -9,7 +10,9 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -29,6 +32,7 @@ import java.util.Date;
 public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
     private AuthenticationManager authenticationManager;
     private TokenAuthService tokenAuthService;
+    private HandlerExceptionResolver handlerExceptionResolver;
 
     public JWTLoginFilter(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
@@ -38,6 +42,13 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
         this.authenticationManager = authenticationManager;
         this.tokenAuthService = tokenAuthService;
     }
+
+    public JWTLoginFilter(AuthenticationManager authenticationManager, TokenAuthService tokenAuthService, HandlerExceptionResolver handlerExceptionResolver) {
+        this.authenticationManager = authenticationManager;
+        this.tokenAuthService = tokenAuthService;
+        this.handlerExceptionResolver = handlerExceptionResolver;
+    }
+
     // 接收并解析用户凭证
     @Override
     public Authentication attemptAuthentication(HttpServletRequest req,
@@ -65,5 +76,11 @@ public class JWTLoginFilter extends UsernamePasswordAuthenticationFilter {
 
         String token = tokenAuthService.createToken(auth,false);
         res.addHeader("Authorization", token);
+    }
+
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
+        super.unsuccessfulAuthentication(request, response, failed);
+        handlerExceptionResolver.resolveException(request, response, null, new CommonException("TWFT0006"));
     }
 }

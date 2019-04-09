@@ -4,10 +4,13 @@ import com.threewater.webserver.webtemplate.config.encoder.DefaultPasswordEncode
 import com.threewater.webserver.webtemplate.filter.auth.JWTAuthenticationFilter;
 import com.threewater.webserver.webtemplate.filter.auth.JWTLoginFilter;
 import com.threewater.webserver.webtemplate.filter.auth.WeChatLoginFilter;
+import com.threewater.webserver.webtemplate.filter.handler.WeChatAuthenticationFailureHandler;
+import com.threewater.webserver.webtemplate.filter.handler.WeChatAuthenticationSuccessHandler;
 import com.threewater.webserver.webtemplate.security.provider.InMemoryAuthenticationProvider;
 import com.threewater.webserver.webtemplate.service.TokenAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
@@ -34,7 +37,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private HandlerExceptionResolver handlerExceptionResolver;
     @Autowired
-    InMemoryAuthenticationProvider inMemoryAuthenticationProvider;
+    private InMemoryAuthenticationProvider inMemoryAuthenticationProvider;
+    @Autowired
+    private WeChatAuthenticationSuccessHandler weChatAuthenticationSuccessHandler;
+    @Autowired
+    private WeChatAuthenticationFailureHandler weChatAuthenticationFailureHandler;
 
 //    @Autowired
 //    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -51,6 +58,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //        return authenticationManager;
 //    }
 
+    @Bean
+    public WeChatLoginFilter weChatLoginFilter() throws Exception{
+        WeChatLoginFilter weChatLoginFilter = new WeChatLoginFilter(authenticationManager(), tokenAuthService);
+        weChatLoginFilter.setAuthenticationSuccessHandler(weChatAuthenticationSuccessHandler);
+        weChatLoginFilter.setAuthenticationFailureHandler(weChatAuthenticationFailureHandler);
+        return weChatLoginFilter;
+    }
+
+    @Bean
+    public JWTAuthenticationFilter jwtAuthenticationFilter() throws Exception{
+        return new JWTAuthenticationFilter(authenticationManager(), tokenAuthService, handlerExceptionResolver);
+    }
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -72,8 +91,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                // 设置登陆成功页
 //                .defaultSuccessUrl("/").permitAll()
 //                .and()
-                .addFilterBefore(new WeChatLoginFilter(authenticationManager(), tokenAuthService), UsernamePasswordAuthenticationFilter.class)
-                .addFilter(new JWTAuthenticationFilter(authenticationManager(),tokenAuthService, handlerExceptionResolver))
+                .addFilterBefore(weChatLoginFilter(), UsernamePasswordAuthenticationFilter.class)
+                .addFilter(jwtAuthenticationFilter())
                 .logout().permitAll();
         // 关闭CSRF跨域
         http.csrf().disable()
@@ -84,6 +103,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         //解决静态资源被拦截的问题
-        web.ignoring().antMatchers("/css/**");
+        web.ignoring().antMatchers("/css/**").antMatchers("/js/**");
     }
 }

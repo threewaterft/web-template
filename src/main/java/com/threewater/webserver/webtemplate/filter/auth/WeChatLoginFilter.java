@@ -3,6 +3,7 @@ package com.threewater.webserver.webtemplate.filter.auth;
 import com.threewater.webserver.webtemplate.service.TokenAuthService;
 import com.threewater.webserver.webtemplate.util.HttpClientUtil;
 import com.threewater.webserver.webtemplate.util.JsonUtil;
+import org.omg.CORBA.WCharSeqHelper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -95,14 +96,18 @@ public class WeChatLoginFilter extends AbstractAuthenticationProcessingFilter {
         return resMap;
     }
 
-    // 用户成功登录后，这个方法会被调用，我们在这个方法里生成token
-    @Override
-    protected void successfulAuthentication(HttpServletRequest req,
-                                            HttpServletResponse res,
-                                            FilterChain chain,
-                                            Authentication auth) throws IOException, ServletException {
-
-        String token = tokenAuthService.createToken(auth,false);
-        res.addHeader("Authorization", token);
-    }
+//    // 用户成功登录后，这个方法会被调用，我们在这个方法里生成token
+//    @Override
+//    protected void successfulAuthentication(HttpServletRequest req,
+//                                            HttpServletResponse res,
+//                                            FilterChain chain,
+//                                            Authentication auth) throws IOException, ServletException {
+//
+//
+//    }
+//
+//    @Override
+//    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
+//        super.unsuccessfulAuthentication(request, response, failed);
+//    }
 }
