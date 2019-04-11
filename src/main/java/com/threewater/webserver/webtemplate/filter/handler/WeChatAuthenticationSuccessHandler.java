@@ -26,5 +26,6 @@ public class WeChatAuthenticationSuccessHandler extends SavedRequestAwareAuthent
 //        super.onAuthenticationSuccess(request, response, auth);
         String token = tokenAuthService.createToken(auth,false);
         response.addHeader("Authorization", token);
+        //TO-DO 添加交易成功标志
     }
 }

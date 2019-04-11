@@ -67,10 +67,11 @@ public class WeChatAuthenticationProvider implements AuthenticationProvider {
                User user = new User(loginUserVo.getWxNickname(),"",authorities);
                return new UsernamePasswordAuthenticationToken(user,authentication.getCredentials(),authorities);
            }else{
+               //TO-DO 获取这个异常处理
                throw new UsernameNotFoundException("用户注册失败");
            }
        }else{
-           //用户已经注册过，获取其相应的权限
+           //TO-DO 用户已经注册过，获取其相应的权限，构造一个UsernamePasswordAuthenticationToken
        }
 
        return null;
