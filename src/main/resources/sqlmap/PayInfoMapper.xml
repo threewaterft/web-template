@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.threewater.webserver.webtemplate.mapper.PayInfoMapper">
+  <resultMap id="BaseResultMap" type="com.threewater.webserver.webtemplate.po.PayInfo">
+    <id column="pay_id" jdbcType="VARCHAR" property="payId" />
+    <result column="pay_type" jdbcType="CHAR" property="payType" />
+    <result column="pay_desc" jdbcType="VARCHAR" property="payDesc" />
+    <result column="account_no" jdbcType="VARCHAR" property="accountNo" />
+    <result column="payee" jdbcType="VARCHAR" property="payee" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    pay_id, pay_type, pay_desc, account_no, payee
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from pay_info
+    where pay_id = #{payId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from pay_info
+    where pay_id = #{payId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.threewater.webserver.webtemplate.po.PayInfo">
+    insert into pay_info (pay_id, pay_type, pay_desc, 
+      account_no, payee)
+    values (#{payId,jdbcType=VARCHAR}, #{payType,jdbcType=CHAR}, #{payDesc,jdbcType=VARCHAR}, 
+      #{accountNo,jdbcType=VARCHAR}, #{payee,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.threewater.webserver.webtemplate.po.PayInfo">
+    insert into pay_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="payId != null">
+        pay_id,
+      </if>
+      <if test="payType != null">
+        pay_type,
+      </if>
+      <if test="payDesc != null">
+        pay_desc,
+      </if>
+      <if test="accountNo != null">
+        account_no,
+      </if>
+      <if test="payee != null">
+        payee,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="payId != null">
+        #{payId,jdbcType=VARCHAR},
+      </if>
+      <if test="payType != null">
+        #{payType,jdbcType=CHAR},
+      </if>
+      <if test="payDesc != null">
+        #{payDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="accountNo != null">
+        #{accountNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payee != null">
+        #{payee,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.threewater.webserver.webtemplate.po.PayInfo">
+    update pay_info
+    <set>
+      <if test="payType != null">
+        pay_type = #{payType,jdbcType=CHAR},
+      </if>
+      <if test="payDesc != null">
+        pay_desc = #{payDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="accountNo != null">
+        account_no = #{accountNo,jdbcType=VARCHAR},
+      </if>
+      <if test="payee != null">
+        payee = #{payee,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where pay_id = #{payId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.threewater.webserver.webtemplate.po.PayInfo">
+    update pay_info
+    set pay_type = #{payType,jdbcType=CHAR},
+      pay_desc = #{payDesc,jdbcType=VARCHAR},
+      account_no = #{accountNo,jdbcType=VARCHAR},
+      payee = #{payee,jdbcType=VARCHAR}
+    where pay_id = #{payId,jdbcType=VARCHAR}
+  </update>
+</mapper>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.threewater.webserver.webtemplate.mapper.ProdTypeInfoMapper">
+  <resultMap id="BaseResultMap" type="com.threewater.webserver.webtemplate.po.ProdTypeInfo">
+    <result column="prod_type_id" jdbcType="VARCHAR" property="prodTypeId" />
+    <result column="sup_prod_type_id" jdbcType="VARCHAR" property="supProdTypeId" />
+    <result column="prod_type_level" jdbcType="INTEGER" property="prodTypeLevel" />
+    <result column="prod_type_name" jdbcType="VARCHAR" property="prodTypeName" />
+    <result column="prod_type_desc" jdbcType="VARCHAR" property="prodTypeDesc" />
+  </resultMap>
+  <insert id="insert" parameterType="com.threewater.webserver.webtemplate.po.ProdTypeInfo">
+    insert into prod_type_info (prod_type_id, sup_prod_type_id, prod_type_level, 
+      prod_type_name, prod_type_desc)
+    values (#{prodTypeId,jdbcType=VARCHAR}, #{supProdTypeId,jdbcType=VARCHAR}, #{prodTypeLevel,jdbcType=INTEGER}, 
+      #{prodTypeName,jdbcType=VARCHAR}, #{prodTypeDesc,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.threewater.webserver.webtemplate.po.ProdTypeInfo">
+    insert into prod_type_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="prodTypeId != null">
+        prod_type_id,
+      </if>
+      <if test="supProdTypeId != null">
+        sup_prod_type_id,
+      </if>
+      <if test="prodTypeLevel != null">
+        prod_type_level,
+      </if>
+      <if test="prodTypeName != null">
+        prod_type_name,
+      </if>
+      <if test="prodTypeDesc != null">
+        prod_type_desc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="prodTypeId != null">
+        #{prodTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="supProdTypeId != null">
+        #{supProdTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="prodTypeLevel != null">
+        #{prodTypeLevel,jdbcType=INTEGER},
+      </if>
+      <if test="prodTypeName != null">
+        #{prodTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="prodTypeDesc != null">
+        #{prodTypeDesc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

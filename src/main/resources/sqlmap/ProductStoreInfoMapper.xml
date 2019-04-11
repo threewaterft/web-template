@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.threewater.webserver.webtemplate.mapper.ProductStoreInfoMapper">
+  <resultMap id="BaseResultMap" type="com.threewater.webserver.webtemplate.po.ProductStoreInfo">
+    <id column="prod_store_id" jdbcType="VARCHAR" property="prodStoreId" />
+    <result column="wh_id" jdbcType="VARCHAR" property="whId" />
+    <result column="prod_pos" jdbcType="VARCHAR" property="prodPos" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="prod_amount" jdbcType="INTEGER" property="prodAmount" />
+    <result column="unit" jdbcType="VARCHAR" property="unit" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    prod_store_id, wh_id, prod_pos, user_id, prod_amount, unit
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from product_store_info
+    where prod_store_id = #{prodStoreId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from product_store_info
+    where prod_store_id = #{prodStoreId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.threewater.webserver.webtemplate.po.ProductStoreInfo">
+    insert into product_store_info (prod_store_id, wh_id, prod_pos, 
+      user_id, prod_amount, unit
+      )
+    values (#{prodStoreId,jdbcType=VARCHAR}, #{whId,jdbcType=VARCHAR}, #{prodPos,jdbcType=VARCHAR}, 
+      #{userId,jdbcType=VARCHAR}, #{prodAmount,jdbcType=INTEGER}, #{unit,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.threewater.webserver.webtemplate.po.ProductStoreInfo">
+    insert into product_store_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="prodStoreId != null">
+        prod_store_id,
+      </if>
+      <if test="whId != null">
+        wh_id,
+      </if>
+      <if test="prodPos != null">
+        prod_pos,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="prodAmount != null">
+        prod_amount,
+      </if>
+      <if test="unit != null">
+        unit,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="prodStoreId != null">
+        #{prodStoreId,jdbcType=VARCHAR},
+      </if>
+      <if test="whId != null">
+        #{whId,jdbcType=VARCHAR},
+      </if>
+      <if test="prodPos != null">
+        #{prodPos,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="prodAmount != null">
+        #{prodAmount,jdbcType=INTEGER},
+      </if>
+      <if test="unit != null">
+        #{unit,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.threewater.webserver.webtemplate.po.ProductStoreInfo">
+    update product_store_info
+    <set>
+      <if test="whId != null">
+        wh_id = #{whId,jdbcType=VARCHAR},
+      </if>
+      <if test="prodPos != null">
+        prod_pos = #{prodPos,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="prodAmount != null">
+        prod_amount = #{prodAmount,jdbcType=INTEGER},
+      </if>
+      <if test="unit != null">
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where prod_store_id = #{prodStoreId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.threewater.webserver.webtemplate.po.ProductStoreInfo">
+    update product_store_info
+    set wh_id = #{whId,jdbcType=VARCHAR},
+      prod_pos = #{prodPos,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      prod_amount = #{prodAmount,jdbcType=INTEGER},
+      unit = #{unit,jdbcType=VARCHAR}
+    where prod_store_id = #{prodStoreId,jdbcType=VARCHAR}
+  </update>
+</mapper>

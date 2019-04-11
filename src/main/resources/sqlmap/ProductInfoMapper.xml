@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.threewater.webserver.webtemplate.mapper.ProductInfoMapper">
+  <resultMap id="BaseResultMap" type="com.threewater.webserver.webtemplate.po.ProductInfo">
+    <id column="prod_id" jdbcType="VARCHAR" property="prodId" />
+    <result column="prod_name" jdbcType="VARCHAR" property="prodName" />
+    <result column="prod_type" jdbcType="VARCHAR" property="prodType" />
+    <result column="single_price" jdbcType="DOUBLE" property="singlePrice" />
+    <result column="th_img" jdbcType="VARCHAR" property="thImg" />
+    <result column="img" jdbcType="VARCHAR" property="img" />
+    <result column="prod_desc" jdbcType="VARCHAR" property="prodDesc" />
+    <result column="join_time" jdbcType="TIMESTAMP" property="joinTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    prod_id, prod_name, prod_type, single_price, th_img, img, prod_desc, join_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from product_info
+    where prod_id = #{prodId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from product_info
+    where prod_id = #{prodId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.threewater.webserver.webtemplate.po.ProductInfo">
+    insert into product_info (prod_id, prod_name, prod_type, 
+      single_price, th_img, img, 
+      prod_desc, join_time)
+    values (#{prodId,jdbcType=VARCHAR}, #{prodName,jdbcType=VARCHAR}, #{prodType,jdbcType=VARCHAR}, 
+      #{singlePrice,jdbcType=DOUBLE}, #{thImg,jdbcType=VARCHAR}, #{img,jdbcType=VARCHAR}, 
+      #{prodDesc,jdbcType=VARCHAR}, #{joinTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.threewater.webserver.webtemplate.po.ProductInfo">
+    insert into product_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="prodId != null">
+        prod_id,
+      </if>
+      <if test="prodName != null">
+        prod_name,
+      </if>
+      <if test="prodType != null">
+        prod_type,
+      </if>
+      <if test="singlePrice != null">
+        single_price,
+      </if>
+      <if test="thImg != null">
+        th_img,
+      </if>
+      <if test="img != null">
+        img,
+      </if>
+      <if test="prodDesc != null">
+        prod_desc,
+      </if>
+      <if test="joinTime != null">
+        join_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="prodId != null">
+        #{prodId,jdbcType=VARCHAR},
+      </if>
+      <if test="prodName != null">
+        #{prodName,jdbcType=VARCHAR},
+      </if>
+      <if test="prodType != null">
+        #{prodType,jdbcType=VARCHAR},
+      </if>
+      <if test="singlePrice != null">
+        #{singlePrice,jdbcType=DOUBLE},
+      </if>
+      <if test="thImg != null">
+        #{thImg,jdbcType=VARCHAR},
+      </if>
+      <if test="img != null">
+        #{img,jdbcType=VARCHAR},
+      </if>
+      <if test="prodDesc != null">
+        #{prodDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="joinTime != null">
+        #{joinTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.threewater.webserver.webtemplate.po.ProductInfo">
+    update product_info
+    <set>
+      <if test="prodName != null">
+        prod_name = #{prodName,jdbcType=VARCHAR},
+      </if>
+      <if test="prodType != null">
+        prod_type = #{prodType,jdbcType=VARCHAR},
+      </if>
+      <if test="singlePrice != null">
+        single_price = #{singlePrice,jdbcType=DOUBLE},
+      </if>
+      <if test="thImg != null">
+        th_img = #{thImg,jdbcType=VARCHAR},
+      </if>
+      <if test="img != null">
+        img = #{img,jdbcType=VARCHAR},
+      </if>
+      <if test="prodDesc != null">
+        prod_desc = #{prodDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="joinTime != null">
+        join_time = #{joinTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where prod_id = #{prodId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.threewater.webserver.webtemplate.po.ProductInfo">
+    update product_info
+    set prod_name = #{prodName,jdbcType=VARCHAR},
+      prod_type = #{prodType,jdbcType=VARCHAR},
+      single_price = #{singlePrice,jdbcType=DOUBLE},
+      th_img = #{thImg,jdbcType=VARCHAR},
+      img = #{img,jdbcType=VARCHAR},
+      prod_desc = #{prodDesc,jdbcType=VARCHAR},
+      join_time = #{joinTime,jdbcType=TIMESTAMP}
+    where prod_id = #{prodId,jdbcType=VARCHAR}
+  </update>
+</mapper>

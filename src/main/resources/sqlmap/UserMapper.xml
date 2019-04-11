@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.threewater.webserver.webtemplate.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.threewater.webserver.webtemplate.po.User">
+    <id column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="CHAR" property="password" />
+    <result column="roles" jdbcType="CHAR" property="roles" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    username, password, roles
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where username = #{username,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from user
+    where username = #{username,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.threewater.webserver.webtemplate.po.User">
+    insert into user (username, password, roles
+      )
+    values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=CHAR}, #{roles,jdbcType=CHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.threewater.webserver.webtemplate.po.User">
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="username != null">
+        username,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="roles != null">
+        roles,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=CHAR},
+      </if>
+      <if test="roles != null">
+        #{roles,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.threewater.webserver.webtemplate.po.User">
+    update user
+    <set>
+      <if test="password != null">
+        password = #{password,jdbcType=CHAR},
+      </if>
+      <if test="roles != null">
+        roles = #{roles,jdbcType=CHAR},
+      </if>
+    </set>
+    where username = #{username,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.threewater.webserver.webtemplate.po.User">
+    update user
+    set password = #{password,jdbcType=CHAR},
+      roles = #{roles,jdbcType=CHAR}
+    where username = #{username,jdbcType=VARCHAR}
+  </update>
+</mapper>

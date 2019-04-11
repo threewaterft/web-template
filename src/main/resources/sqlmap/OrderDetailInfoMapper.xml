@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.threewater.webserver.webtemplate.mapper.OrderDetailInfoMapper">
+  <resultMap id="BaseResultMap" type="com.threewater.webserver.webtemplate.po.OrderDetailInfo">
+    <id column="order_detail_id" jdbcType="VARCHAR" property="orderDetailId" />
+    <result column="order_id" jdbcType="VARCHAR" property="orderId" />
+    <result column="prod_id" jdbcType="VARCHAR" property="prodId" />
+    <result column="amount" jdbcType="INTEGER" property="amount" />
+    <result column="cur_price" jdbcType="DOUBLE" property="curPrice" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    order_detail_id, order_id, prod_id, amount, cur_price
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from order_detail_info
+    where order_detail_id = #{orderDetailId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from order_detail_info
+    where order_detail_id = #{orderDetailId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.threewater.webserver.webtemplate.po.OrderDetailInfo">
+    insert into order_detail_info (order_detail_id, order_id, prod_id, 
+      amount, cur_price)
+    values (#{orderDetailId,jdbcType=VARCHAR}, #{orderId,jdbcType=VARCHAR}, #{prodId,jdbcType=VARCHAR}, 
+      #{amount,jdbcType=INTEGER}, #{curPrice,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.threewater.webserver.webtemplate.po.OrderDetailInfo">
+    insert into order_detail_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="orderDetailId != null">
+        order_detail_id,
+      </if>
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="prodId != null">
+        prod_id,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="curPrice != null">
+        cur_price,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="orderDetailId != null">
+        #{orderDetailId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null">
+        #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="prodId != null">
+        #{prodId,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="curPrice != null">
+        #{curPrice,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.threewater.webserver.webtemplate.po.OrderDetailInfo">
+    update order_detail_info
+    <set>
+      <if test="orderId != null">
+        order_id = #{orderId,jdbcType=VARCHAR},
+      </if>
+      <if test="prodId != null">
+        prod_id = #{prodId,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="curPrice != null">
+        cur_price = #{curPrice,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where order_detail_id = #{orderDetailId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.threewater.webserver.webtemplate.po.OrderDetailInfo">
+    update order_detail_info
+    set order_id = #{orderId,jdbcType=VARCHAR},
+      prod_id = #{prodId,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=INTEGER},
+      cur_price = #{curPrice,jdbcType=DOUBLE}
+    where order_detail_id = #{orderDetailId,jdbcType=VARCHAR}
+  </update>
+</mapper>
