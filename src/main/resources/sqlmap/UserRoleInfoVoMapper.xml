@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.threewater.webserver.webtemplate.mapper.UserRoleInfoVoMapper">
+  <resultMap id="BaseResultMap" type="com.threewater.webserver.webtemplate.vo.UserRoleInfoVo">
+    <id column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="open_id" jdbcType="VARCHAR" property="openId" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="tel_no" jdbcType="VARCHAR" property="telNo" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="pay_id" jdbcType="VARCHAR" property="payId" />
+    <result column="state" jdbcType="CHAR" property="state" />
+    <result column="valid_date" jdbcType="DATE" property="validDate" />
+    <result column="wx_city" jdbcType="VARCHAR" property="wxCity" />
+    <result column="wx_avatar_url" jdbcType="VARCHAR" property="wxAvatarUrl" />
+    <result column="wx_gender" jdbcType="CHAR" property="wxGender" />
+    <result column="wx_country" jdbcType="VARCHAR" property="wxCountry" />
+    <result column="wx_nickName" jdbcType="VARCHAR" property="wxNickname" />
+    <result column="wx_language" jdbcType="VARCHAR" property="wxLanguage" />
+    <result column="wx_province" jdbcType="VARCHAR" property="wxProvince" />
+    <collection property="roleInfoList"  ofType="com.threewater.webserver.webtemplate.po.RoleInfo"
+                select="findRolesByUserId" column="{userId=user_id}">
+    </collection>
+  </resultMap>
+  <sql id="Base_Column_List">
+    user_id, name, open_id, email, tel_no, address, pay_id, state, valid_date, wx_city, 
+    wx_avatar_url, wx_gender, wx_country, wx_nickName, wx_language, wx_province
+  </sql>
+  <sql id="Role_Column_List">
+     role_id, role_name, role_desc
+  </sql>
+  <select id="queryRoleInfoByUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user_info
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </select>
+  <select id="findRolesByUserId" parameterType="java.lang.String" resultType="com.threewater.webserver.webtemplate.po.RoleInfo">
+    select
+    <include refid="Role_Column_List"/>
+    from user_role_info uri inner join role_info ri on uri.role_id = ri.role_id
+    where uri.user_Id = #{userId}
+  </select>
+</mapper>

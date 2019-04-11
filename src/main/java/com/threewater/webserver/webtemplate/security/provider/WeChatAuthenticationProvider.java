@@ -72,7 +72,7 @@ public class WeChatAuthenticationProvider implements AuthenticationProvider {
        String strUserinfo = authentication.getName();
        String strCredentials = (String)authentication.getCredentials();
        Map<String,String> userInfoMap =genUserInfoMap(strUserinfo,strCredentials);
-        logger.info("the userInfoMap is: {}", userInfoMap);
+//        logger.info("the userInfoMap is: {}", userInfoMap);
 //        UserInfo userRoleInfo = weChatUserServiceImpl.queryUserById(userInfoMap.get(WeChatLoginFilter.OPEN_ID));
        UserRoleInfoVo userInfo = weChatUserServiceImpl.queryUserRoleInfoById(userInfoMap.get(WeChatLoginFilter.OPEN_ID));
        if(userInfo == null){
@@ -80,7 +80,7 @@ public class WeChatAuthenticationProvider implements AuthenticationProvider {
            WeChatLoginUserVo loginUserVo = new WeChatLoginUserVo(userInfoMap.get(WeChatLoginFilter.OPEN_ID),userInfoMap.get(CITY),
                    userInfoMap.get(AVATAR_URL),String.valueOf(userInfoMap.get(GENDER)),userInfoMap.get(COUNTRY),userInfoMap.get(NICK_NAME),
                    "",userInfoMap.get(PROVINCE),new Date());
-           logger.info("+++{}",JsonUtil.obj2str(loginUserVo.buildUserInfo()));
+//           logger.info("+++{}",JsonUtil.obj2str(loginUserVo.buildUserInfo()));
            if(weChatUserServiceImpl.rgstUser(loginUserVo.buildUserInfo())>0){
                List<GrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority("ROLE_GUEST"));
                User user = new User(loginUserVo.getWxNickname(),"",authorities);
