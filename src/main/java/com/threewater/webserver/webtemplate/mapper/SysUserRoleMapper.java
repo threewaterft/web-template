@@ -1,11 +1,11 @@
 package com.threewater.webserver.webtemplate.mapper;
 
-import com.threewater.webserver.webtemplate.vo.SysUserRoleVo;
-import org.apache.ibatis.annotations.Select;
-
-import java.util.List;
+import com.threewater.webserver.webtemplate.po.SysUserRoleKey;
 
 public interface SysUserRoleMapper {
-    @Select("SELECT * FROM sys_user_role WHERE user_id = #{userId}")
-    List<SysUserRoleVo> listByUserId(Integer userId);
+    int deleteByPrimaryKey(SysUserRoleKey key);
+
+    int insert(SysUserRoleKey record);
+
+    int insertSelective(SysUserRoleKey record);
 }

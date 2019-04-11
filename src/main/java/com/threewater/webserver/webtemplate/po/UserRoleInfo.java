@@ -1,37 +1,33 @@
 package com.threewater.webserver.webtemplate.po;
 
-
 public class UserRoleInfo {
+    private String userRoleId;
 
-  private String userRoleId;
-  private String userId;
-  private String roleId;
+    private String userId;
 
+    private String roleId;
 
-  public String getUserRoleId() {
-    return userRoleId;
-  }
+    public String getUserRoleId() {
+        return userRoleId;
+    }
 
-  public void setUserRoleId(String userRoleId) {
-    this.userRoleId = userRoleId;
-  }
+    public void setUserRoleId(String userRoleId) {
+        this.userRoleId = userRoleId == null ? null : userRoleId.trim();
+    }
 
+    public String getUserId() {
+        return userId;
+    }
 
-  public String getUserId() {
-    return userId;
-  }
+    public void setUserId(String userId) {
+        this.userId = userId == null ? null : userId.trim();
+    }
 
-  public void setUserId(String userId) {
-    this.userId = userId;
-  }
+    public String getRoleId() {
+        return roleId;
+    }
 
-
-  public String getRoleId() {
-    return roleId;
-  }
-
-  public void setRoleId(String roleId) {
-    this.roleId = roleId;
-  }
-
+    public void setRoleId(String roleId) {
+        this.roleId = roleId == null ? null : roleId.trim();
+    }
 }

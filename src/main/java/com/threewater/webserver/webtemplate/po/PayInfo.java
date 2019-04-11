@@ -1,57 +1,53 @@
 package com.threewater.webserver.webtemplate.po;
 
-
 public class PayInfo {
+    private String payId;
 
-  private String payId;
-  private String payType;
-  private String payDesc;
-  private String accountNo;
-  private String payee;
+    private String payType;
 
+    private String payDesc;
 
-  public String getPayId() {
-    return payId;
-  }
+    private String accountNo;
 
-  public void setPayId(String payId) {
-    this.payId = payId;
-  }
+    private String payee;
 
+    public String getPayId() {
+        return payId;
+    }
 
-  public String getPayType() {
-    return payType;
-  }
+    public void setPayId(String payId) {
+        this.payId = payId == null ? null : payId.trim();
+    }
 
-  public void setPayType(String payType) {
-    this.payType = payType;
-  }
+    public String getPayType() {
+        return payType;
+    }
 
+    public void setPayType(String payType) {
+        this.payType = payType == null ? null : payType.trim();
+    }
 
-  public String getPayDesc() {
-    return payDesc;
-  }
+    public String getPayDesc() {
+        return payDesc;
+    }
 
-  public void setPayDesc(String payDesc) {
-    this.payDesc = payDesc;
-  }
+    public void setPayDesc(String payDesc) {
+        this.payDesc = payDesc == null ? null : payDesc.trim();
+    }
 
+    public String getAccountNo() {
+        return accountNo;
+    }
 
-  public String getAccountNo() {
-    return accountNo;
-  }
+    public void setAccountNo(String accountNo) {
+        this.accountNo = accountNo == null ? null : accountNo.trim();
+    }
 
-  public void setAccountNo(String accountNo) {
-    this.accountNo = accountNo;
-  }
+    public String getPayee() {
+        return payee;
+    }
 
-
-  public String getPayee() {
-    return payee;
-  }
-
-  public void setPayee(String payee) {
-    this.payee = payee;
-  }
-
+    public void setPayee(String payee) {
+        this.payee = payee == null ? null : payee.trim();
+    }
 }

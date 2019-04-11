@@ -1,107 +1,105 @@
 package com.threewater.webserver.webtemplate.po;
 
+import java.util.Date;
 
 public class OrderInfo {
+    private String orderId;
 
-  private String orderId;
-  private java.sql.Timestamp orderDate;
-  private String userId;
-  private String customerName;
-  private double totalPrice;
-  private String payType;
-  private java.sql.Timestamp payDate;
-  private String customerTel;
-  private String state;
-  private long orderDesc;
+    private Date orderDate;
 
+    private String userId;
 
-  public String getOrderId() {
-    return orderId;
-  }
+    private String customerName;
 
-  public void setOrderId(String orderId) {
-    this.orderId = orderId;
-  }
+    private Double totalPrice;
 
+    private String payType;
 
-  public java.sql.Timestamp getOrderDate() {
-    return orderDate;
-  }
+    private Date payDate;
 
-  public void setOrderDate(java.sql.Timestamp orderDate) {
-    this.orderDate = orderDate;
-  }
+    private String customerTel;
 
+    private String state;
 
-  public String getUserId() {
-    return userId;
-  }
+    private Integer orderDesc;
 
-  public void setUserId(String userId) {
-    this.userId = userId;
-  }
+    public String getOrderId() {
+        return orderId;
+    }
 
+    public void setOrderId(String orderId) {
+        this.orderId = orderId == null ? null : orderId.trim();
+    }
 
-  public String getCustomerName() {
-    return customerName;
-  }
+    public Date getOrderDate() {
+        return orderDate;
+    }
 
-  public void setCustomerName(String customerName) {
-    this.customerName = customerName;
-  }
+    public void setOrderDate(Date orderDate) {
+        this.orderDate = orderDate;
+    }
 
+    public String getUserId() {
+        return userId;
+    }
 
-  public double getTotalPrice() {
-    return totalPrice;
-  }
+    public void setUserId(String userId) {
+        this.userId = userId == null ? null : userId.trim();
+    }
 
-  public void setTotalPrice(double totalPrice) {
-    this.totalPrice = totalPrice;
-  }
+    public String getCustomerName() {
+        return customerName;
+    }
 
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName == null ? null : customerName.trim();
+    }
 
-  public String getPayType() {
-    return payType;
-  }
+    public Double getTotalPrice() {
+        return totalPrice;
+    }
 
-  public void setPayType(String payType) {
-    this.payType = payType;
-  }
+    public void setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
+    }
 
+    public String getPayType() {
+        return payType;
+    }
 
-  public java.sql.Timestamp getPayDate() {
-    return payDate;
-  }
+    public void setPayType(String payType) {
+        this.payType = payType == null ? null : payType.trim();
+    }
 
-  public void setPayDate(java.sql.Timestamp payDate) {
-    this.payDate = payDate;
-  }
+    public Date getPayDate() {
+        return payDate;
+    }
 
+    public void setPayDate(Date payDate) {
+        this.payDate = payDate;
+    }
 
-  public String getCustomerTel() {
-    return customerTel;
-  }
+    public String getCustomerTel() {
+        return customerTel;
+    }
 
-  public void setCustomerTel(String customerTel) {
-    this.customerTel = customerTel;
-  }
+    public void setCustomerTel(String customerTel) {
+        this.customerTel = customerTel == null ? null : customerTel.trim();
+    }
 
+    public String getState() {
+        return state;
+    }
 
-  public String getState() {
-    return state;
-  }
+    public void setState(String state) {
+        this.state = state == null ? null : state.trim();
+    }
 
-  public void setState(String state) {
-    this.state = state;
-  }
+    public Integer getOrderDesc() {
+        return orderDesc;
+    }
 
-
-  public long getOrderDesc() {
-    return orderDesc;
-  }
-
-  public void setOrderDesc(long orderDesc) {
-    this.orderDesc = orderDesc;
-  }
-
+    public void setOrderDesc(Integer orderDesc) {
+        this.orderDesc = orderDesc;
+    }
 }

@@ -1,17 +1,17 @@
 package com.threewater.webserver.webtemplate.mapper;
 
-import com.threewater.webserver.webtemplate.vo.SysUserVo;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Select;
+import com.threewater.webserver.webtemplate.po.SysUser;
 
 public interface SysUserMapper {
-    @Select("SELECT * FROM sys_user WHERE id = #{id}")
-    SysUserVo selectById(Integer id);
+    int deleteByPrimaryKey(Integer id);
 
-    @Select("SELECT * FROM sys_user WHERE name = #{name}")
-    SysUserVo selectByName(String name);
-    @Insert("INSERT INTO sys_user(NAME,PASSWORD) VALUES(#{name},#{password})")
-    @Options(useGeneratedKeys = true, keyProperty = "id")
-    int insertUser(SysUserVo sysUserVo);
+    int insert(SysUser record);
+
+    int insertSelective(SysUser record);
+
+    SysUser selectByPrimaryKey(Integer id);
+
+    int updateByPrimaryKeySelective(SysUser record);
+
+    int updateByPrimaryKey(SysUser record);
 }

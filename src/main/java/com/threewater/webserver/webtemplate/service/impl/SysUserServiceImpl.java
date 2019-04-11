@@ -1,7 +1,7 @@
 package com.threewater.webserver.webtemplate.service.impl;
 
 
-import com.threewater.webserver.webtemplate.mapper.SysUserMapper;
+import com.threewater.webserver.webtemplate.mapper.SysUserTestMapper;
 import com.threewater.webserver.webtemplate.service.SysUserService;
 import com.threewater.webserver.webtemplate.vo.SysUserVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class SysUserServiceImpl implements SysUserService {
     @Autowired
-    private SysUserMapper userMapper;
+    private SysUserTestMapper userMapper;
     @Override
     public SysUserVo selectById(Integer id) {
         return userMapper.selectById(id);

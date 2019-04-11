@@ -1,9 +1,17 @@
 package com.threewater.webserver.webtemplate.mapper;
 
-import com.threewater.webserver.webtemplate.vo.SysRoleVo;
-import org.apache.ibatis.annotations.Select;
+import com.threewater.webserver.webtemplate.po.SysRole;
 
 public interface SysRoleMapper {
-    @Select("SELECT * FROM sys_role WHERE id = #{id}")
-    SysRoleVo selectById(Integer id);
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(SysRole record);
+
+    int insertSelective(SysRole record);
+
+    SysRole selectByPrimaryKey(Integer id);
+
+    int updateByPrimaryKeySelective(SysRole record);
+
+    int updateByPrimaryKey(SysRole record);
 }

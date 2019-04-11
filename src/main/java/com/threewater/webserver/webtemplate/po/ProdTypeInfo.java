@@ -1,57 +1,53 @@
 package com.threewater.webserver.webtemplate.po;
 
-
 public class ProdTypeInfo {
+    private String prodTypeId;
 
-  private String prodTypeId;
-  private String supProdTypeId;
-  private long prodTypeLevel;
-  private String prodTypeName;
-  private String prodTypeDesc;
+    private String supProdTypeId;
 
+    private Integer prodTypeLevel;
 
-  public String getProdTypeId() {
-    return prodTypeId;
-  }
+    private String prodTypeName;
 
-  public void setProdTypeId(String prodTypeId) {
-    this.prodTypeId = prodTypeId;
-  }
+    private String prodTypeDesc;
 
+    public String getProdTypeId() {
+        return prodTypeId;
+    }
 
-  public String getSupProdTypeId() {
-    return supProdTypeId;
-  }
+    public void setProdTypeId(String prodTypeId) {
+        this.prodTypeId = prodTypeId == null ? null : prodTypeId.trim();
+    }
 
-  public void setSupProdTypeId(String supProdTypeId) {
-    this.supProdTypeId = supProdTypeId;
-  }
+    public String getSupProdTypeId() {
+        return supProdTypeId;
+    }
 
+    public void setSupProdTypeId(String supProdTypeId) {
+        this.supProdTypeId = supProdTypeId == null ? null : supProdTypeId.trim();
+    }
 
-  public long getProdTypeLevel() {
-    return prodTypeLevel;
-  }
+    public Integer getProdTypeLevel() {
+        return prodTypeLevel;
+    }
 
-  public void setProdTypeLevel(long prodTypeLevel) {
-    this.prodTypeLevel = prodTypeLevel;
-  }
+    public void setProdTypeLevel(Integer prodTypeLevel) {
+        this.prodTypeLevel = prodTypeLevel;
+    }
 
+    public String getProdTypeName() {
+        return prodTypeName;
+    }
 
-  public String getProdTypeName() {
-    return prodTypeName;
-  }
+    public void setProdTypeName(String prodTypeName) {
+        this.prodTypeName = prodTypeName == null ? null : prodTypeName.trim();
+    }
 
-  public void setProdTypeName(String prodTypeName) {
-    this.prodTypeName = prodTypeName;
-  }
+    public String getProdTypeDesc() {
+        return prodTypeDesc;
+    }
 
-
-  public String getProdTypeDesc() {
-    return prodTypeDesc;
-  }
-
-  public void setProdTypeDesc(String prodTypeDesc) {
-    this.prodTypeDesc = prodTypeDesc;
-  }
-
+    public void setProdTypeDesc(String prodTypeDesc) {
+        this.prodTypeDesc = prodTypeDesc == null ? null : prodTypeDesc.trim();
+    }
 }

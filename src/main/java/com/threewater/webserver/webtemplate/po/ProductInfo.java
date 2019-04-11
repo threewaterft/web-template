@@ -1,87 +1,85 @@
 package com.threewater.webserver.webtemplate.po;
 
+import java.util.Date;
 
 public class ProductInfo {
+    private String prodId;
 
-  private String prodId;
-  private String prodName;
-  private String prodType;
-  private double singlePrice;
-  private String thImg;
-  private String img;
-  private String prodDesc;
-  private java.sql.Timestamp joinTime;
+    private String prodName;
 
+    private String prodType;
 
-  public String getProdId() {
-    return prodId;
-  }
+    private Double singlePrice;
 
-  public void setProdId(String prodId) {
-    this.prodId = prodId;
-  }
+    private String thImg;
 
+    private String img;
 
-  public String getProdName() {
-    return prodName;
-  }
+    private String prodDesc;
 
-  public void setProdName(String prodName) {
-    this.prodName = prodName;
-  }
+    private Date joinTime;
 
+    public String getProdId() {
+        return prodId;
+    }
 
-  public String getProdType() {
-    return prodType;
-  }
+    public void setProdId(String prodId) {
+        this.prodId = prodId == null ? null : prodId.trim();
+    }
 
-  public void setProdType(String prodType) {
-    this.prodType = prodType;
-  }
+    public String getProdName() {
+        return prodName;
+    }
 
+    public void setProdName(String prodName) {
+        this.prodName = prodName == null ? null : prodName.trim();
+    }
 
-  public double getSinglePrice() {
-    return singlePrice;
-  }
+    public String getProdType() {
+        return prodType;
+    }
 
-  public void setSinglePrice(double singlePrice) {
-    this.singlePrice = singlePrice;
-  }
+    public void setProdType(String prodType) {
+        this.prodType = prodType == null ? null : prodType.trim();
+    }
 
+    public Double getSinglePrice() {
+        return singlePrice;
+    }
 
-  public String getThImg() {
-    return thImg;
-  }
+    public void setSinglePrice(Double singlePrice) {
+        this.singlePrice = singlePrice;
+    }
 
-  public void setThImg(String thImg) {
-    this.thImg = thImg;
-  }
+    public String getThImg() {
+        return thImg;
+    }
 
+    public void setThImg(String thImg) {
+        this.thImg = thImg == null ? null : thImg.trim();
+    }
 
-  public String getImg() {
-    return img;
-  }
+    public String getImg() {
+        return img;
+    }
 
-  public void setImg(String img) {
-    this.img = img;
-  }
+    public void setImg(String img) {
+        this.img = img == null ? null : img.trim();
+    }
 
+    public String getProdDesc() {
+        return prodDesc;
+    }
 
-  public String getProdDesc() {
-    return prodDesc;
-  }
+    public void setProdDesc(String prodDesc) {
+        this.prodDesc = prodDesc == null ? null : prodDesc.trim();
+    }
 
-  public void setProdDesc(String prodDesc) {
-    this.prodDesc = prodDesc;
-  }
+    public Date getJoinTime() {
+        return joinTime;
+    }
 
-
-  public java.sql.Timestamp getJoinTime() {
-    return joinTime;
-  }
-
-  public void setJoinTime(java.sql.Timestamp joinTime) {
-    this.joinTime = joinTime;
-  }
-
+    public void setJoinTime(Date joinTime) {
+        this.joinTime = joinTime;
+    }
 }
