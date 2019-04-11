@@ -1,11 +1,18 @@
 package com.threewater.webserver.webtemplate.security.provider;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.threewater.webserver.webtemplate.filter.auth.WeChatLoginFilter;
 import com.threewater.webserver.webtemplate.mapper.LoginUserInfoMapper;
+import com.threewater.webserver.webtemplate.po.RoleInfo;
 import com.threewater.webserver.webtemplate.po.UserInfo;
+import com.threewater.webserver.webtemplate.po.UserRoleInfo;
 import com.threewater.webserver.webtemplate.service.UserService;
 import com.threewater.webserver.webtemplate.util.JsonUtil;
+import com.threewater.webserver.webtemplate.vo.UserRoleInfoVo;
 import com.threewater.webserver.webtemplate.vo.WeChatLoginUserVo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -15,9 +22,12 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.util.*;
 
+@Component
 public class WeChatAuthenticationProvider implements AuthenticationProvider {
     @Autowired
     UserService weChatUserServiceImpl;
@@ -50,18 +60,27 @@ public class WeChatAuthenticationProvider implements AuthenticationProvider {
      */
     private final static String LANGUAGE = "language";
 
+    @Autowired
+    ObjectMapper objectMapper;
+
+    private static final Logger logger = LoggerFactory.getLogger(WeChatAuthenticationProvider.class);
+
+
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         //TO-DO 是否需要和加密数据匹配一次
        String strUserinfo = authentication.getName();
        String strCredentials = (String)authentication.getCredentials();
        Map<String,String> userInfoMap =genUserInfoMap(strUserinfo,strCredentials);
-       UserInfo userInfo = weChatUserServiceImpl.queryUserById(userInfoMap.get(WeChatLoginFilter.OPEN_ID));
+        logger.info("the userInfoMap is: {}", userInfoMap);
+//        UserInfo userRoleInfo = weChatUserServiceImpl.queryUserById(userInfoMap.get(WeChatLoginFilter.OPEN_ID));
+       UserRoleInfoVo userInfo = weChatUserServiceImpl.queryUserRoleInfoById(userInfoMap.get(WeChatLoginFilter.OPEN_ID));
        if(userInfo == null){
            //此为新用户，为其自动注册
            WeChatLoginUserVo loginUserVo = new WeChatLoginUserVo(userInfoMap.get(WeChatLoginFilter.OPEN_ID),userInfoMap.get(CITY),
-                   userInfoMap.get(AVATAR_URL),userInfoMap.get(GENDER),userInfoMap.get(COUNTRY),userInfoMap.get(NICK_NAME),
-                   userInfoMap.get(LANGUAGE),userInfoMap.get(PROVINCE),new Date());
+                   userInfoMap.get(AVATAR_URL),String.valueOf(userInfoMap.get(GENDER)),userInfoMap.get(COUNTRY),userInfoMap.get(NICK_NAME),
+                   "",userInfoMap.get(PROVINCE),new Date());
+           logger.info("+++{}",JsonUtil.obj2str(loginUserVo.buildUserInfo()));
            if(weChatUserServiceImpl.rgstUser(loginUserVo.buildUserInfo())>0){
                List<GrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority("ROLE_GUEST"));
                User user = new User(loginUserVo.getWxNickname(),"",authorities);
@@ -72,10 +91,14 @@ public class WeChatAuthenticationProvider implements AuthenticationProvider {
            }
        }else{
            //TO-DO 用户已经注册过，获取其相应的权限，构造一个UsernamePasswordAuthenticationToken
+           List<GrantedAuthority> authorities = new ArrayList<>();
+           List<RoleInfo> roleInfos = userInfo.getRoleInfoList();
+           for(RoleInfo roleInfo: roleInfos){
+               authorities.add(new SimpleGrantedAuthority(roleInfo.getRoleName()));
+           }
+           User user = new User(userInfo.getWxNickname(),"",authorities);
+           return new UsernamePasswordAuthenticationToken(user,authentication.getCredentials(),authorities);
        }
-
-       return null;
-
     }
 
     @Override
@@ -90,7 +113,7 @@ public class WeChatAuthenticationProvider implements AuthenticationProvider {
      * @return
      */
     private Map<String,String> genUserInfoMap(String strUserinfo,String strCredentials){
-        Map<String,String> userInfo = JsonUtil.str2obj(strUserinfo, Map.class);
+        Map<String, String> userInfo = JsonUtil.str2obj(strUserinfo, Map.class);
         Map<String,String> credentials = JsonUtil.str2obj(strCredentials, Map.class);
         Map<String,String> userInfoMap = new HashMap<>(userInfo);
         userInfoMap.putAll(credentials);

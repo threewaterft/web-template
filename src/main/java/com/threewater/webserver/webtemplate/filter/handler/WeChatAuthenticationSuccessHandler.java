@@ -1,6 +1,8 @@
 package com.threewater.webserver.webtemplate.filter.handler;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.threewater.webserver.webtemplate.service.TokenAuthService;
+import com.threewater.webserver.webtemplate.util.ResultBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +22,16 @@ public class WeChatAuthenticationSuccessHandler extends SavedRequestAwareAuthent
 
     @Autowired
     private TokenAuthService tokenAuthService;
+    @Autowired
+    private ObjectMapper objectMapper;
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication auth) throws ServletException, IOException {
 //        super.onAuthenticationSuccess(request, response, auth);
         String token = tokenAuthService.createToken(auth,false);
         response.addHeader("Authorization", token);
-        //TO-DO 添加交易成功标志
+        //添加交易成功标志
+        response.getWriter().write(objectMapper.writeValueAsString(ResultBean.getSuccessRes("登录成功！")));
+
     }
 }

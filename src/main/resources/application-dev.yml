@@ -37,10 +37,10 @@ spring:
 mybatis:
   #mybatis配置文件路径
   config-location: classpath:mybatis-config.xml
-  #配置扫描实体类，可以直接在配置文件中指定，也可以配置在这里
+  #配置实体类別名，可以直接在配置文件中指定，也可以配置在这里
   #type-aliases-package: com.ch.bootproject.domain
   #mapper-locations指定mapper xml文件路径
-  #mapper-locations: com.ch.bootproject.mapper
+  mapper-locations: classpath:sqlmap/*.xml
 
 # 分页配置
 pagehelper:

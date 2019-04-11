@@ -1,6 +1,7 @@
 package com.threewater.webserver.webtemplate.service;
 
 import com.threewater.webserver.webtemplate.po.UserInfo;
+import com.threewater.webserver.webtemplate.vo.UserRoleInfoVo;
 
 public interface UserService {
     /**
@@ -17,4 +18,10 @@ public interface UserService {
      */
     public int rgstUser(UserInfo userInfo);
 
+    /**
+     * 通过openid查询带有权限信息的用户信息
+     * @param id
+     * @return
+     */
+    public UserRoleInfoVo queryUserRoleInfoById(String id);
 }

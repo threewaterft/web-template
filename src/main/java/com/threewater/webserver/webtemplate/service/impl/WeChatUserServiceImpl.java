@@ -1,9 +1,6 @@
 package com.threewater.webserver.webtemplate.service.impl;
 
-import com.threewater.webserver.webtemplate.mapper.LoginUserInfoMapper;
-import com.threewater.webserver.webtemplate.mapper.UserInfoMapper;
-import com.threewater.webserver.webtemplate.mapper.UserMapper;
-import com.threewater.webserver.webtemplate.mapper.UserRoleInfoMapper;
+import com.threewater.webserver.webtemplate.mapper.*;
 import com.threewater.webserver.webtemplate.po.RoleInfo;
 import com.threewater.webserver.webtemplate.po.UserInfo;
 import com.threewater.webserver.webtemplate.po.UserRoleInfo;
@@ -11,6 +8,7 @@ import com.threewater.webserver.webtemplate.service.UserService;
 import com.threewater.webserver.webtemplate.util.sequence.twitter.SnowFlakeSequence;
 import com.threewater.webserver.webtemplate.vo.SysRoleVo;
 import com.threewater.webserver.webtemplate.vo.SysUserRoleVo;
+import com.threewater.webserver.webtemplate.vo.UserRoleInfoVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -33,10 +31,12 @@ public class WeChatUserServiceImpl implements UserService {
     UserInfoMapper userInfoMapper;
     @Autowired
     UserRoleInfoMapper userRoleInfoMapper;
+    @Autowired
+    UserRoleInfoVoMapper userRoleInfoVoMapper;
 
     @Override
     public UserInfo queryUserById(String id) {
-        return loginUserInfoMapper.selectByOpenId(id);
+        return userInfoMapper.selectByPrimaryKey(id);
     }
     @Transactional
     @Override
@@ -51,6 +51,11 @@ public class WeChatUserServiceImpl implements UserService {
             //TO-DO 回滚
         }
         return 0;
+    }
+
+    @Override
+    public UserRoleInfoVo queryUserRoleInfoById(String id) {
+        return userRoleInfoVoMapper.queryRoleInfoByUserId(id);
     }
 
 

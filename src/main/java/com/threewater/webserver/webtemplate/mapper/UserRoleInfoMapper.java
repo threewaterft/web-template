@@ -1,6 +1,5 @@
 package com.threewater.webserver.webtemplate.mapper;
 
-import com.threewater.webserver.webtemplate.po.RoleInfo;
 import com.threewater.webserver.webtemplate.po.UserRoleInfo;
 
 public interface UserRoleInfoMapper {
@@ -15,6 +14,4 @@ public interface UserRoleInfoMapper {
     int updateByPrimaryKeySelective(UserRoleInfo record);
 
     int updateByPrimaryKey(UserRoleInfo record);
-
-    RoleInfo queryRoleInfoByUserId(String userId);
 }

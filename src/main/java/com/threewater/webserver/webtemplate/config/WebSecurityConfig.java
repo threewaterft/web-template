@@ -7,6 +7,7 @@ import com.threewater.webserver.webtemplate.filter.auth.WeChatLoginFilter;
 import com.threewater.webserver.webtemplate.filter.handler.WeChatAuthenticationFailureHandler;
 import com.threewater.webserver.webtemplate.filter.handler.WeChatAuthenticationSuccessHandler;
 import com.threewater.webserver.webtemplate.security.provider.InMemoryAuthenticationProvider;
+import com.threewater.webserver.webtemplate.security.provider.WeChatAuthenticationProvider;
 import com.threewater.webserver.webtemplate.service.TokenAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -37,7 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private HandlerExceptionResolver handlerExceptionResolver;
     @Autowired
-    private InMemoryAuthenticationProvider inMemoryAuthenticationProvider;
+    private WeChatAuthenticationProvider weChatAuthenticationProvider;
     @Autowired
     private WeChatAuthenticationSuccessHandler weChatAuthenticationSuccessHandler;
     @Autowired
@@ -76,7 +77,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder);
         // 使用自定义身份验证组件
-        auth.authenticationProvider(inMemoryAuthenticationProvider);
+        auth.authenticationProvider(weChatAuthenticationProvider);
     }
 
     @Override
