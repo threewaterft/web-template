@@ -30,4 +30,10 @@ public class UserRoleInfo {
     public void setRoleId(String roleId) {
         this.roleId = roleId == null ? null : roleId.trim();
     }
+
+    public UserRoleInfo(String userRoleId, String userId, String roleId) {
+        this.userRoleId = userRoleId;
+        this.userId = userId;
+        this.roleId = roleId;
+    }
 }

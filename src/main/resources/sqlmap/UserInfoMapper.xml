@@ -33,8 +33,8 @@
     delete from user_info
     where user_id = #{userId,jdbcType=VARCHAR}
   </delete>
-  <insert id="insert" parameterType="com.threewater.webserver.webtemplate.po.UserInfo">
-    insert into user_info (user_id, name, open_id, 
+  <insert id="insert" parameterType="com.threewater.webserver.webtemplate.po.UserInfo" >
+    insert into user_info (user_id, name, open_id,
       email, tel_no, address, 
       pay_id, state, valid_date, 
       wx_city, wx_avatar_url, wx_gender, 

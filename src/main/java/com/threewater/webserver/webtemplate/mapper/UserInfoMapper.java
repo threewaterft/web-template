@@ -2,6 +2,7 @@ package com.threewater.webserver.webtemplate.mapper;
 
 import com.threewater.webserver.webtemplate.po.UserInfo;
 
+
 public interface UserInfoMapper {
     int deleteByPrimaryKey(String userId);
 

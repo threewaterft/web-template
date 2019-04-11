@@ -52,6 +52,17 @@ public class WeChatLoginFilter extends AbstractAuthenticationProcessingFilter {
      */
     private final static String TOKEN_ACCESS_API = "%s?appid=%s&secret=%s&js_code=%s&grant_type=%s";
 
+    /**
+     * 获取 openid所在的栏位
+     */
+    public final static String OPEN_ID = "openid";
+
+    /**
+     * 获取session_key所在的栏位
+     */
+    public final static String SESSION_KEY = "session_key";
+
+
     public WeChatLoginFilter() {
         super(new AntPathRequestMatcher("/login", "POST"));
     }
@@ -74,14 +85,15 @@ public class WeChatLoginFilter extends AbstractAuthenticationProcessingFilter {
 
         logger.debug("the request param is code: {}, userInfo: {}", code, userInfo);
         String sessionAccessApi = String.format(TOKEN_ACCESS_API, openIdUri, appId, appSecretKey, code, grantType);
-        Map<String, Object> weChatMap= this.getSession(sessionAccessApi);
+        String credentials = getSessionKey(sessionAccessApi);
+        Map<String, Object> weChatMap= JsonUtil.str2obj(credentials, Map.class);
         logger.debug("the weChatMap is {}", weChatMap);
         if (weChatMap != null){
-            String openId = (String) weChatMap.get("openid");
-            String session_key = (String) weChatMap.get("session_key");
+            String openId = (String) weChatMap.get(OPEN_ID);
+            String session_key = (String) weChatMap.get(SESSION_KEY);
             if (openId != null){
                 // 生成验证 authenticationToken
-                UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(userInfo, weChatMap);
+                UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(userInfo, credentials);
                 // 返回验证结果
                 return this.getAuthenticationManager().authenticate(authRequest);
             }
@@ -94,6 +106,11 @@ public class WeChatLoginFilter extends AbstractAuthenticationProcessingFilter {
         String result = HttpClientUtil.httpSendGet(sessionAccessApi);
         Map<String, Object> resMap = JsonUtil.str2obj(result, Map.class);
         return resMap;
+    }
+
+    public String getSessionKey(String sessionAccessApi){
+        logger.debug(sessionAccessApi);
+        return HttpClientUtil.httpSendGet(sessionAccessApi);
     }
 
 //    // 用户成功登录后，这个方法会被调用，我们在这个方法里生成token

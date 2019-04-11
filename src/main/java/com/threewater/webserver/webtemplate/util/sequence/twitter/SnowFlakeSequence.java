@@ -11,7 +11,9 @@ package com.threewater.webserver.webtemplate.util.sequence.twitter;
 
 
 import com.threewater.webserver.webtemplate.util.sequence.Sequence;
+import org.springframework.stereotype.Component;
 
+@Component
 public class SnowFlakeSequence implements Sequence {
 
     /**
@@ -22,12 +24,12 @@ public class SnowFlakeSequence implements Sequence {
     /**
      * 机器id所占的位数
      */
-    private final long workerIdBits = 5L;
+    private final long workerIdBits = 2L;
 
     /**
      * 数据中心标识id所占的位数
      */
-    private final long dataCenterIdBits = 5L;
+    private final long dataCenterIdBits = 1L;
 
     /**
      * 支持的最大机器id，结果是31 (这个移位算法可以很快的计算出几位二进制数所能表示的最大十进制数)
@@ -105,6 +107,10 @@ public class SnowFlakeSequence implements Sequence {
         this.id = id;
     }
 
+    public SnowFlakeSequence(){
+
+    }
+
     @Override
     public String id() {
         return this.id;
@@ -167,13 +173,13 @@ public class SnowFlakeSequence implements Sequence {
         return System.currentTimeMillis();
     }
 
-
+    private static SnowFlakeSequence seq = new SnowFlakeSequence();
 
     public static void main(String[] args) {
 
         System.out.println(System.currentTimeMillis());
 
-        Sequence sequence = new SnowFlakeSequence("", 0, 0);
+        Sequence sequence = new SnowFlakeSequence("", 3, 1);
 
         System.out.println(sequence.id());
         System.out.println(sequence.nextValue());
@@ -182,5 +188,10 @@ public class SnowFlakeSequence implements Sequence {
         }
 //        System.out.println(sequence.nextValue());
     }
+
+    public static String genPKId(){
+        return String.valueOf(seq.nextValue());
+    }
+
 
 }

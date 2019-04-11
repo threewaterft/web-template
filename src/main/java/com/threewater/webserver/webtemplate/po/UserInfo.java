@@ -35,6 +35,8 @@ public class UserInfo {
 
     private String wxProvince;
 
+    private Date rgstDate;
+
     public String getUserId() {
         return userId;
     }
@@ -161,5 +163,51 @@ public class UserInfo {
 
     public void setWxProvince(String wxProvince) {
         this.wxProvince = wxProvince == null ? null : wxProvince.trim();
+    }
+
+    public Date getRgstDate() {
+        return rgstDate;
+    }
+
+    public void setRgstDate(Date rgstDate) {
+        this.rgstDate = rgstDate;
+    }
+
+    public UserInfo(String userId, String name, String openId, String email, String telNo, String address, String payId, String state, Date validDate, String wxCity, String wxAvatarUrl, String wxGender, String wxCountry, String wxNickname, String wxLanguage, String wxProvince, Date rgstDate) {
+        this.userId = userId;
+        this.name = name;
+        this.openId = openId;
+        this.email = email;
+        this.telNo = telNo;
+        this.address = address;
+        this.payId = payId;
+        this.state = state;
+        this.validDate = validDate;
+        this.wxCity = wxCity;
+        this.wxAvatarUrl = wxAvatarUrl;
+        this.wxGender = wxGender;
+        this.wxCountry = wxCountry;
+        this.wxNickname = wxNickname;
+        this.wxLanguage = wxLanguage;
+        this.wxProvince = wxProvince;
+        this.rgstDate = rgstDate;
+    }
+
+    public UserInfo() {
+    }
+
+
+
+    public UserInfo(String userId, String openId, String wxCity, String wxAvatarUrl, String wxGender, String wxCountry, String wxNickname, String wxLanguage, String wxProvince, Date rgstDate) {
+        this.userId = userId;
+        this.openId = openId;
+        this.wxCity = wxCity;
+        this.wxAvatarUrl = wxAvatarUrl;
+        this.wxGender = wxGender;
+        this.wxCountry = wxCountry;
+        this.wxNickname = wxNickname;
+        this.wxLanguage = wxLanguage;
+        this.wxProvince = wxProvince;
+        this.rgstDate = rgstDate;
     }
 }

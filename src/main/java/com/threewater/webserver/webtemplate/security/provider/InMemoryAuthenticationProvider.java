@@ -48,10 +48,10 @@ public class InMemoryAuthenticationProvider implements AuthenticationProvider {
     }
 
     private boolean isMatch(Authentication authentication){
-//        if(authentication.getName().equals(adminName)&&authentication.getCredentials().equals(adminPassword))
-//            return true;
-//        else
-//            return false;
-        return true;
+        if(authentication.getName().equals(adminName)&&authentication.getCredentials().equals(adminPassword))
+            return true;
+        else
+            return false;
+//        return true;
     }
 }
