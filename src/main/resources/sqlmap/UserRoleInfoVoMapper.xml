@@ -19,7 +19,7 @@
     <result column="wx_language" jdbcType="VARCHAR" property="wxLanguage" />
     <result column="wx_province" jdbcType="VARCHAR" property="wxProvince" />
     <collection property="roleInfoList"  ofType="com.threewater.webserver.webtemplate.po.RoleInfo"
-                select="findRolesByUserId" column="{userId=user_id}">
+                select="findRolesByUserId" column="user_id">
     </collection>
   </resultMap>
   <sql id="Base_Column_List">
@@ -27,7 +27,7 @@
     wx_avatar_url, wx_gender, wx_country, wx_nickName, wx_language, wx_province
   </sql>
   <sql id="Role_Column_List">
-     role_id, role_name, role_desc
+     ri.role_id, ri.role_name, ri.role_desc
   </sql>
   <select id="queryRoleInfoByUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 

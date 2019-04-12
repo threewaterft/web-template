@@ -30,8 +30,8 @@ public class ResultBean implements Serializable {
         return new ResultBean("00", "0", "", "");
     }
 
-    public static ResultBean getDefaultFailRes(){
-        return getFailRes("01", "-1", "系统错误！");
+    public static ResultBean getDefaultFailRes(String msg){
+        return getFailRes("01", "-1", msg);
     }
 
     public static ResultBean getSuccessRes(String data){

@@ -29,7 +29,7 @@ public class TokenAuthServiceImpl implements TokenAuthService {
     public void init() {
         this.secretKey = "threewaterdotcom";
         int secondIn1day = 1000 * 60 * 60 * 24;//一天
-        this.tokenValidityInMilliseconds = secondIn1day * 2L;//两天
+        this.tokenValidityInMilliseconds = secondIn1day / 24;//一小时
         this.tokenValidityInMillisecondsForRememberMe = secondIn1day * 7L;//7天
         this.tokenPrefix="Bearer ";
     }

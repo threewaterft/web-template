@@ -43,7 +43,7 @@ public class UserController {
         if(sysUserService.insertUser(user))
             return ResultBean.getSuccessRes(user.getName());
         else
-            return ResultBean.getDefaultFailRes();
+            return ResultBean.getDefaultFailRes("注册失败");
     }
 
 }

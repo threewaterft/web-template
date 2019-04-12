@@ -1,6 +1,7 @@
 package com.threewater.webserver.webtemplate.controller;
 
 import com.threewater.webserver.webtemplate.exception.CommonException;
+import com.threewater.webserver.webtemplate.util.ResultBean;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,11 +19,11 @@ public class HelloWorldController {
 
     @RequestMapping("/hellouser")
     @Secured(value = {"ROLE_USER"})
-    public String helloUser(@RequestBody Map<String, Object> jsonData){ return "hello user" + jsonData.get("msg");}
+    public ResultBean helloUser(@RequestBody Map<String, Object> jsonData){ return ResultBean.getSuccessRes("hello user" + jsonData.get("msg"));}
 
     @RequestMapping("/helloguest")
     @Secured(value = {"ROLE_GUEST"})
-    public String helloGuest(@RequestBody Map<String, Object> jsonData){ return "hello guest" + jsonData.get("msg");}
+    public ResultBean helloGuest(@RequestBody Map<String, Object> jsonData){ return ResultBean.getSuccessRes("hello guest" + jsonData.get("msg"));}
 
     @RequestMapping("/error")
     public Object error(){

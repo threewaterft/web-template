@@ -77,7 +77,7 @@ public class WeChatAuthenticationProvider implements AuthenticationProvider {
 //       logger.info("the userInfoMap is: {}", userInfoMap);
 //        UserInfo userRoleInfo = weChatUserServiceImpl.queryUserById(userInfoMap.get(WeChatLoginFilter.OPEN_ID));
        UserRoleInfoVo userInfo = weChatUserServiceImpl.queryUserRoleInfoById((userInfoMap.getString(WeChatLoginFilter.OPEN_ID)));
-       logger.info("the userInfo is: {}", userInfo);
+//       logger.info("the userInfo is: {}", JSON.toJSONString(userInfo));
        if(userInfo == null){
            //此为新用户，为其自动注册
            WeChatLoginUserVo loginUserVo = new WeChatLoginUserVo(userInfoMap.getString(WeChatLoginFilter.OPEN_ID),userInfoMap.getString(CITY),
@@ -96,6 +96,7 @@ public class WeChatAuthenticationProvider implements AuthenticationProvider {
            //TO-DO 用户已经注册过，获取其相应的权限，构造一个UsernamePasswordAuthenticationToken
            List<GrantedAuthority> authorities = new ArrayList<>();
            List<RoleInfo> roleInfos = userInfo.getRoleInfoList();
+           logger.info("roleInfos is {}", JSON.toJSONString(roleInfos));
            for(RoleInfo roleInfo: roleInfos){
                authorities.add(new SimpleGrantedAuthority(roleInfo.getRoleName()));
            }

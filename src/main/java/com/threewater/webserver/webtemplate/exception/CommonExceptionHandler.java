@@ -18,14 +18,14 @@ public class CommonExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = CommonException.class)
     public ResponseEntity<ResultBean> handleServiceError(CommonException ex) {
         logger.info("服务异常，ex:" + ex.getCode());
-        return new ResponseEntity<>(ResultBean.getFailRes(SYS_TX_STATUS_FAIL, ex.getCode(), ex.getLocalizedMessage()), HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(ResultBean.getFailRes(SYS_TX_STATUS_FAIL, ex.getCode(), ex.getMessage()), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(value = {Exception.class})
     public ResponseEntity<ResultBean> handleError(Exception ex) {
         ex.printStackTrace();
-        System.out.println(ex.getMessage());
-        logger.info("服务异常，ex:" + ex.getLocalizedMessage());
-        return new ResponseEntity<>(ResultBean.getDefaultFailRes(), HttpStatus.BAD_REQUEST);
+//        System.out.println(ex.getMessage());
+        logger.info("服务异常，ex:" + ex.getMessage());
+        return new ResponseEntity<>(ResultBean.getDefaultFailRes(ex.getMessage()), HttpStatus.BAD_REQUEST);
     }
 }
