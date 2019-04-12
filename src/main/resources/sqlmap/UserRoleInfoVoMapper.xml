@@ -33,7 +33,7 @@
     select 
     <include refid="Base_Column_List" />
     from user_info
-    where user_id = #{userId,jdbcType=VARCHAR}
+    where open_id = #{openId,jdbcType=VARCHAR}
   </select>
   <select id="findRolesByUserId" parameterType="java.lang.String" resultType="com.threewater.webserver.webtemplate.po.RoleInfo">
     select

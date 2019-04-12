@@ -74,14 +74,15 @@ public class WeChatAuthenticationProvider implements AuthenticationProvider {
        String strUserinfo = authentication.getName();
        String strCredentials = (String)authentication.getCredentials();
        JSONObject userInfoMap =genUserInfoMap(strUserinfo,strCredentials);
-       logger.info("the userInfoMap is: {}", userInfoMap);
+//       logger.info("the userInfoMap is: {}", userInfoMap);
 //        UserInfo userRoleInfo = weChatUserServiceImpl.queryUserById(userInfoMap.get(WeChatLoginFilter.OPEN_ID));
        UserRoleInfoVo userInfo = weChatUserServiceImpl.queryUserRoleInfoById((userInfoMap.getString(WeChatLoginFilter.OPEN_ID)));
+       logger.info("the userInfo is: {}", userInfo);
        if(userInfo == null){
            //此为新用户，为其自动注册
            WeChatLoginUserVo loginUserVo = new WeChatLoginUserVo(userInfoMap.getString(WeChatLoginFilter.OPEN_ID),userInfoMap.getString(CITY),
                    userInfoMap.getString(AVATAR_URL),String.valueOf(userInfoMap.getIntValue(GENDER)),userInfoMap.getString(COUNTRY),userInfoMap.getString(NICK_NAME),
-                   "",userInfoMap.getString(PROVINCE),new Date());
+                   userInfoMap.getString(LANGUAGE),userInfoMap.getString(PROVINCE),new Date());
 //           logger.info("+++{}",JsonUtil.obj2str(loginUserVo.buildUserInfo()));
            if(weChatUserServiceImpl.rgstUser(loginUserVo.buildUserInfo())>0){
                List<GrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority("ROLE_GUEST"));
