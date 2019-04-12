@@ -13,7 +13,10 @@ import org.springframework.stereotype.Component;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedOutputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 @Component
 public class WeChatAuthenticationSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
@@ -31,6 +34,7 @@ public class WeChatAuthenticationSuccessHandler extends SavedRequestAwareAuthent
         String token = tokenAuthService.createToken(auth,false);
         response.addHeader("Authorization", token);
         //添加交易成功标志
+        response.setContentType("text/html;charset=UTF-8");
         response.getWriter().write(objectMapper.writeValueAsString(ResultBean.getSuccessRes("登录成功！")));
 
     }

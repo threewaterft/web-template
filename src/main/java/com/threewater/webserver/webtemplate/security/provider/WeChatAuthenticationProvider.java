@@ -1,5 +1,7 @@
 package com.threewater.webserver.webtemplate.security.provider;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.threewater.webserver.webtemplate.filter.auth.WeChatLoginFilter;
@@ -71,15 +73,15 @@ public class WeChatAuthenticationProvider implements AuthenticationProvider {
         //TO-DO 是否需要和加密数据匹配一次
        String strUserinfo = authentication.getName();
        String strCredentials = (String)authentication.getCredentials();
-       Map<String,String> userInfoMap =genUserInfoMap(strUserinfo,strCredentials);
-//        logger.info("the userInfoMap is: {}", userInfoMap);
+       JSONObject userInfoMap =genUserInfoMap(strUserinfo,strCredentials);
+       logger.info("the userInfoMap is: {}", userInfoMap);
 //        UserInfo userRoleInfo = weChatUserServiceImpl.queryUserById(userInfoMap.get(WeChatLoginFilter.OPEN_ID));
-       UserRoleInfoVo userInfo = weChatUserServiceImpl.queryUserRoleInfoById(userInfoMap.get(WeChatLoginFilter.OPEN_ID));
+       UserRoleInfoVo userInfo = weChatUserServiceImpl.queryUserRoleInfoById((userInfoMap.getString(WeChatLoginFilter.OPEN_ID)));
        if(userInfo == null){
            //此为新用户，为其自动注册
-           WeChatLoginUserVo loginUserVo = new WeChatLoginUserVo(userInfoMap.get(WeChatLoginFilter.OPEN_ID),userInfoMap.get(CITY),
-                   userInfoMap.get(AVATAR_URL),String.valueOf(userInfoMap.get(GENDER)),userInfoMap.get(COUNTRY),userInfoMap.get(NICK_NAME),
-                   "",userInfoMap.get(PROVINCE),new Date());
+           WeChatLoginUserVo loginUserVo = new WeChatLoginUserVo(userInfoMap.getString(WeChatLoginFilter.OPEN_ID),userInfoMap.getString(CITY),
+                   userInfoMap.getString(AVATAR_URL),String.valueOf(userInfoMap.getIntValue(GENDER)),userInfoMap.getString(COUNTRY),userInfoMap.getString(NICK_NAME),
+                   "",userInfoMap.getString(PROVINCE),new Date());
 //           logger.info("+++{}",JsonUtil.obj2str(loginUserVo.buildUserInfo()));
            if(weChatUserServiceImpl.rgstUser(loginUserVo.buildUserInfo())>0){
                List<GrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority("ROLE_GUEST"));
@@ -108,15 +110,16 @@ public class WeChatAuthenticationProvider implements AuthenticationProvider {
 
     /**
      *
-     * @param strUserinfo
+     * @param strUserInfo
      * @param strCredentials
      * @return
      */
-    private Map<String,String> genUserInfoMap(String strUserinfo,String strCredentials){
-        Map<String, String> userInfo = JsonUtil.str2obj(strUserinfo, Map.class);
-        Map<String,String> credentials = JsonUtil.str2obj(strCredentials, Map.class);
-        Map<String,String> userInfoMap = new HashMap<>(userInfo);
-        userInfoMap.putAll(credentials);
-        return userInfoMap;
+    private JSONObject genUserInfoMap(String strUserInfo, String strCredentials){
+        JSONObject userTotalInfoJb = JSON.parseObject(strUserInfo);
+        JSONObject userInfoJb = userTotalInfoJb.getJSONObject("userInfo");
+        JSONObject credentialsJb = JSON.parseObject(strCredentials);
+        JSONObject userInfoMapJb = new JSONObject(userInfoJb);
+        userInfoMapJb.putAll(credentialsJb);
+        return userInfoJb;
     }
 }
