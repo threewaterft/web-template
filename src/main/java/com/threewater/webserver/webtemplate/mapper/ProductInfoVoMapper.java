@@ -7,5 +7,5 @@ import java.util.List;
 public interface ProductInfoVoMapper {
     List<ProductInfoVo> queryProdInfosByWhId(String wareHouseId);
 
-    ProductInfoVo queryByProdId(String id);
+    ProductInfoVo queryByProdId(String prodId);
 }

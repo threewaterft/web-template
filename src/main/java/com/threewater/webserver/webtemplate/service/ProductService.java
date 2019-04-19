@@ -8,9 +8,9 @@ public interface ProductService {
 
     List<ProductInfoVo> queryProdInfosByWhId(String wareHouseId);
 
-    ProductInfoVo queryByProdId(String id);
+    ProductInfoVo queryByProdId(String prodId);
 
-    int deleteByProdId(String id);
+    int deleteByProdId(String prodId);
 
     int updateProdInfo(ProductInfoVo productInfoVo);
 
