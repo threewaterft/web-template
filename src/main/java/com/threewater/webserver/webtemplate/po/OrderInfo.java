@@ -21,7 +21,7 @@ public class OrderInfo {
 
     private String state;
 
-    private Integer orderDesc;
+    private String orderDesc;
 
     public String getOrderId() {
         return orderId;
@@ -95,11 +95,11 @@ public class OrderInfo {
         this.state = state == null ? null : state.trim();
     }
 
-    public Integer getOrderDesc() {
+    public String getOrderDesc() {
         return orderDesc;
     }
 
-    public void setOrderDesc(Integer orderDesc) {
-        this.orderDesc = orderDesc;
+    public void setOrderDesc(String orderDesc) {
+        this.orderDesc = orderDesc == null ? null : orderDesc.trim();
     }
 }

@@ -11,7 +11,7 @@
     <result column="pay_date" jdbcType="TIMESTAMP" property="payDate" />
     <result column="customer_tel" jdbcType="VARCHAR" property="customerTel" />
     <result column="state" jdbcType="CHAR" property="state" />
-    <result column="order_desc" jdbcType="INTEGER" property="orderDesc" />
+    <result column="order_desc" jdbcType="VARCHAR" property="orderDesc" />
   </resultMap>
   <sql id="Base_Column_List">
     order_Id, order_date, user_Id, customer_name, total_price, pay_type, pay_date, customer_tel, 
@@ -35,7 +35,7 @@
     values (#{orderId,jdbcType=VARCHAR}, #{orderDate,jdbcType=TIMESTAMP}, #{userId,jdbcType=VARCHAR}, 
       #{customerName,jdbcType=VARCHAR}, #{totalPrice,jdbcType=DOUBLE}, #{payType,jdbcType=CHAR}, 
       #{payDate,jdbcType=TIMESTAMP}, #{customerTel,jdbcType=VARCHAR}, #{state,jdbcType=CHAR}, 
-      #{orderDesc,jdbcType=INTEGER})
+      #{orderDesc,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.threewater.webserver.webtemplate.po.OrderInfo">
     insert into order_info
@@ -100,7 +100,7 @@
         #{state,jdbcType=CHAR},
       </if>
       <if test="orderDesc != null">
-        #{orderDesc,jdbcType=INTEGER},
+        #{orderDesc,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -132,7 +132,7 @@
         state = #{state,jdbcType=CHAR},
       </if>
       <if test="orderDesc != null">
-        order_desc = #{orderDesc,jdbcType=INTEGER},
+        order_desc = #{orderDesc,jdbcType=VARCHAR},
       </if>
     </set>
     where order_Id = #{orderId,jdbcType=VARCHAR}
@@ -147,7 +147,7 @@
       pay_date = #{payDate,jdbcType=TIMESTAMP},
       customer_tel = #{customerTel,jdbcType=VARCHAR},
       state = #{state,jdbcType=CHAR},
-      order_desc = #{orderDesc,jdbcType=INTEGER}
+      order_desc = #{orderDesc,jdbcType=VARCHAR}
     where order_Id = #{orderId,jdbcType=VARCHAR}
   </update>
 </mapper>

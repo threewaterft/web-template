@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.threewater.webserver.webtemplate.po.ProductInfo">
     <id column="prod_id" jdbcType="VARCHAR" property="prodId" />
     <result column="prod_name" jdbcType="VARCHAR" property="prodName" />
-    <result column="prod_type" jdbcType="VARCHAR" property="prodType" />
+    <result column="prod_type_id" jdbcType="VARCHAR" property="prodTypeId" />
     <result column="single_price" jdbcType="DOUBLE" property="singlePrice" />
     <result column="th_img" jdbcType="VARCHAR" property="thImg" />
     <result column="img" jdbcType="VARCHAR" property="img" />
@@ -12,7 +12,7 @@
     <result column="join_time" jdbcType="TIMESTAMP" property="joinTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    prod_id, prod_name, prod_type, single_price, th_img, img, prod_desc, join_time
+    prod_id, prod_name, prod_type_id, single_price, th_img, img, prod_desc, join_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -25,10 +25,10 @@
     where prod_id = #{prodId,jdbcType=VARCHAR}
   </delete>
   <insert id="insert" parameterType="com.threewater.webserver.webtemplate.po.ProductInfo">
-    insert into product_info (prod_id, prod_name, prod_type, 
+    insert into product_info (prod_id, prod_name, prod_type_id, 
       single_price, th_img, img, 
       prod_desc, join_time)
-    values (#{prodId,jdbcType=VARCHAR}, #{prodName,jdbcType=VARCHAR}, #{prodType,jdbcType=VARCHAR}, 
+    values (#{prodId,jdbcType=VARCHAR}, #{prodName,jdbcType=VARCHAR}, #{prodTypeId,jdbcType=VARCHAR}, 
       #{singlePrice,jdbcType=DOUBLE}, #{thImg,jdbcType=VARCHAR}, #{img,jdbcType=VARCHAR}, 
       #{prodDesc,jdbcType=VARCHAR}, #{joinTime,jdbcType=TIMESTAMP})
   </insert>
@@ -41,8 +41,8 @@
       <if test="prodName != null">
         prod_name,
       </if>
-      <if test="prodType != null">
-        prod_type,
+      <if test="prodTypeId != null">
+        prod_type_id,
       </if>
       <if test="singlePrice != null">
         single_price,
@@ -67,8 +67,8 @@
       <if test="prodName != null">
         #{prodName,jdbcType=VARCHAR},
       </if>
-      <if test="prodType != null">
-        #{prodType,jdbcType=VARCHAR},
+      <if test="prodTypeId != null">
+        #{prodTypeId,jdbcType=VARCHAR},
       </if>
       <if test="singlePrice != null">
         #{singlePrice,jdbcType=DOUBLE},
@@ -93,8 +93,8 @@
       <if test="prodName != null">
         prod_name = #{prodName,jdbcType=VARCHAR},
       </if>
-      <if test="prodType != null">
-        prod_type = #{prodType,jdbcType=VARCHAR},
+      <if test="prodTypeId != null">
+        prod_type_id = #{prodTypeId,jdbcType=VARCHAR},
       </if>
       <if test="singlePrice != null">
         single_price = #{singlePrice,jdbcType=DOUBLE},
@@ -117,7 +117,7 @@
   <update id="updateByPrimaryKey" parameterType="com.threewater.webserver.webtemplate.po.ProductInfo">
     update product_info
     set prod_name = #{prodName,jdbcType=VARCHAR},
-      prod_type = #{prodType,jdbcType=VARCHAR},
+      prod_type_id = #{prodTypeId,jdbcType=VARCHAR},
       single_price = #{singlePrice,jdbcType=DOUBLE},
       th_img = #{thImg,jdbcType=VARCHAR},
       img = #{img,jdbcType=VARCHAR},

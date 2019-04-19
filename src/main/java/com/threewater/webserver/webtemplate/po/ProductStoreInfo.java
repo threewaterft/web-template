@@ -13,6 +13,8 @@ public class ProductStoreInfo {
 
     private String unit;
 
+    private String prodId;
+
     public String getProdStoreId() {
         return prodStoreId;
     }
@@ -59,5 +61,13 @@ public class ProductStoreInfo {
 
     public void setUnit(String unit) {
         this.unit = unit == null ? null : unit.trim();
+    }
+
+    public String getProdId() {
+        return prodId;
+    }
+
+    public void setProdId(String prodId) {
+        this.prodId = prodId == null ? null : prodId.trim();
     }
 }

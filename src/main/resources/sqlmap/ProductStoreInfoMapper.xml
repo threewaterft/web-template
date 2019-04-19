@@ -8,9 +8,10 @@
     <result column="user_id" jdbcType="VARCHAR" property="userId" />
     <result column="prod_amount" jdbcType="INTEGER" property="prodAmount" />
     <result column="unit" jdbcType="VARCHAR" property="unit" />
+    <result column="prod_id" jdbcType="VARCHAR" property="prodId" />
   </resultMap>
   <sql id="Base_Column_List">
-    prod_store_id, wh_id, prod_pos, user_id, prod_amount, unit
+    prod_store_id, wh_id, prod_pos, user_id, prod_amount, unit, prod_id
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
@@ -24,11 +25,11 @@
   </delete>
   <insert id="insert" parameterType="com.threewater.webserver.webtemplate.po.ProductStoreInfo">
     insert into product_store_info (prod_store_id, wh_id, prod_pos, 
-      user_id, prod_amount, unit
-      )
+      user_id, prod_amount, unit, 
+      prod_id)
     values (#{prodStoreId,jdbcType=VARCHAR}, #{whId,jdbcType=VARCHAR}, #{prodPos,jdbcType=VARCHAR}, 
-      #{userId,jdbcType=VARCHAR}, #{prodAmount,jdbcType=INTEGER}, #{unit,jdbcType=VARCHAR}
-      )
+      #{userId,jdbcType=VARCHAR}, #{prodAmount,jdbcType=INTEGER}, #{unit,jdbcType=VARCHAR}, 
+      #{prodId,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.threewater.webserver.webtemplate.po.ProductStoreInfo">
     insert into product_store_info
@@ -51,6 +52,9 @@
       <if test="unit != null">
         unit,
       </if>
+      <if test="prodId != null">
+        prod_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="prodStoreId != null">
@@ -70,6 +74,9 @@
       </if>
       <if test="unit != null">
         #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="prodId != null">
+        #{prodId,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -91,6 +98,9 @@
       <if test="unit != null">
         unit = #{unit,jdbcType=VARCHAR},
       </if>
+      <if test="prodId != null">
+        prod_id = #{prodId,jdbcType=VARCHAR},
+      </if>
     </set>
     where prod_store_id = #{prodStoreId,jdbcType=VARCHAR}
   </update>
@@ -100,7 +110,8 @@
       prod_pos = #{prodPos,jdbcType=VARCHAR},
       user_id = #{userId,jdbcType=VARCHAR},
       prod_amount = #{prodAmount,jdbcType=INTEGER},
-      unit = #{unit,jdbcType=VARCHAR}
+      unit = #{unit,jdbcType=VARCHAR},
+      prod_id = #{prodId,jdbcType=VARCHAR}
     where prod_store_id = #{prodStoreId,jdbcType=VARCHAR}
   </update>
 </mapper>

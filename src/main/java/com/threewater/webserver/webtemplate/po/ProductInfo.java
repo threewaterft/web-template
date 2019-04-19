@@ -7,7 +7,7 @@ public class ProductInfo {
 
     private String prodName;
 
-    private String prodType;
+    private String prodTypeId;
 
     private Double singlePrice;
 
@@ -35,12 +35,12 @@ public class ProductInfo {
         this.prodName = prodName == null ? null : prodName.trim();
     }
 
-    public String getProdType() {
-        return prodType;
+    public String getProdTypeId() {
+        return prodTypeId;
     }
 
-    public void setProdType(String prodType) {
-        this.prodType = prodType == null ? null : prodType.trim();
+    public void setProdTypeId(String prodTypeId) {
+        this.prodTypeId = prodTypeId == null ? null : prodTypeId.trim();
     }
 
     public Double getSinglePrice() {
