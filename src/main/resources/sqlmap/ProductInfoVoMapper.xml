@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.threewater.webserver.webtemplate.mapper.ProductInfoVoMapper">
+    <resultMap id="BaseResultMap" type="com.threewater.webserver.webtemplate.vo.ProductInfoVo">
+        <id column="prod_id" jdbcType="VARCHAR" property="prodId" />
+        <result column="prod_name" jdbcType="VARCHAR" property="prodName" />
+        <result column="prod_type_id" jdbcType="VARCHAR" property="prodTypeId" />
+        <result column="single_price" jdbcType="DOUBLE" property="singlePrice" />
+        <result column="th_img" jdbcType="VARCHAR" property="thImg" />
+        <result column="img" jdbcType="VARCHAR" property="img" />
+        <result column="prod_desc" jdbcType="VARCHAR" property="prodDesc" />
+        <result column="join_time" jdbcType="TIMESTAMP" property="joinTime" />
+        <result column="wh_id" jdbcType="VARCHAR" property="whId" />
+        <result column="prod_pos" jdbcType="VARCHAR" property="prodPos" />
+        <result column="user_id" jdbcType="VARCHAR" property="userId" />
+        <result column="prod_amount" jdbcType="INTEGER" property="prodAmount" />
+        <result column="unit" jdbcType="VARCHAR" property="unit" />
+        <result column="prod_type_name" jdbcType="VARCHAR" property="prodTypeName" />
+        <result column="prod_type_desc" jdbcType="VARCHAR" property="prodTypeDesc" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        i.prod_id, i.prod_name, i.prod_type_id, i.single_price, i.th_img, i.img, i.prod_desc, i.join_time,
+        w.wh_id, w.prod_pos, w.user_id, w.prod_amount, w.unit,
+        t.prod_type_name, t.prod_type_desc
+      </sql>
+    <select id="queryProdInfosByWhId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from product_info i, product_store_info w, prod_type_info t
+        where i.prod_id = w.prod_id and i.prod_type_id = t.prod_type_id and w.wh_id = #{wareHouseId}
+    </select>
+    <select id="queryByProdId" parameterType="java.lang.String" resultType="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from product_info i, product_store_info w, prod_type_info t
+        where i.prod_id = w.prod_id and i.prod_type_id = t.prod_type_id and i.prod_id = #{prodId}
+    </select>
+</mapper>
