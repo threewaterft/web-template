@@ -1,8 +1,11 @@
-package com.threewater.webserver.webtemplate.po;
+package com.threewater.webserver.webtemplate.vo;
+
+import com.threewater.webserver.webtemplate.po.OrderDetailInfo;
 
 import java.util.Date;
+import java.util.List;
 
-public class OrderInfo {
+public class OrderInfoVo {
     private String orderId;
 
     private Date orderDate;
@@ -23,12 +26,14 @@ public class OrderInfo {
 
     private String orderDesc;
 
+    private List<OrderDetailInfo> orderDetailInfoList;
+
     public String getOrderId() {
         return orderId;
     }
 
     public void setOrderId(String orderId) {
-        this.orderId = orderId == null ? null : orderId.trim();
+        this.orderId = orderId;
     }
 
     public Date getOrderDate() {
@@ -44,7 +49,7 @@ public class OrderInfo {
     }
 
     public void setUserId(String userId) {
-        this.userId = userId == null ? null : userId.trim();
+        this.userId = userId;
     }
 
     public String getCustomerName() {
@@ -52,7 +57,7 @@ public class OrderInfo {
     }
 
     public void setCustomerName(String customerName) {
-        this.customerName = customerName == null ? null : customerName.trim();
+        this.customerName = customerName;
     }
 
     public Double getTotalPrice() {
@@ -68,7 +73,7 @@ public class OrderInfo {
     }
 
     public void setPayType(String payType) {
-        this.payType = payType == null ? null : payType.trim();
+        this.payType = payType;
     }
 
     public Date getPayDate() {
@@ -84,7 +89,7 @@ public class OrderInfo {
     }
 
     public void setCustomerTel(String customerTel) {
-        this.customerTel = customerTel == null ? null : customerTel.trim();
+        this.customerTel = customerTel;
     }
 
     public String getState() {
@@ -92,7 +97,7 @@ public class OrderInfo {
     }
 
     public void setState(String state) {
-        this.state = state == null ? null : state.trim();
+        this.state = state;
     }
 
     public String getOrderDesc() {
@@ -100,6 +105,14 @@ public class OrderInfo {
     }
 
     public void setOrderDesc(String orderDesc) {
-        this.orderDesc = orderDesc == null ? null : orderDesc.trim();
+        this.orderDesc = orderDesc;
+    }
+
+    public List<OrderDetailInfo> getOrderDetailInfoList() {
+        return orderDetailInfoList;
+    }
+
+    public void setOrderDetailInfoList(List<OrderDetailInfo> orderDetailInfoList) {
+        this.orderDetailInfoList = orderDetailInfoList;
     }
 }

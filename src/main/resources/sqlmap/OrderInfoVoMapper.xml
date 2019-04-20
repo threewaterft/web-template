@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.threewater.webserver.webtemplate.mapper.OrderInfoVoMapper">
+    <resultMap id="BaseResultMap" type="com.threewater.webserver.webtemplate.vo.OrderInfoVo">
+        <id column="order_Id" jdbcType="VARCHAR" property="orderId" />
+        <result column="order_date" jdbcType="TIMESTAMP" property="orderDate" />
+        <result column="user_Id" jdbcType="VARCHAR" property="userId" />
+        <result column="customer_name" jdbcType="VARCHAR" property="customerName" />
+        <result column="total_price" jdbcType="DOUBLE" property="totalPrice" />
+        <result column="pay_type" jdbcType="CHAR" property="payType" />
+        <result column="pay_date" jdbcType="TIMESTAMP" property="payDate" />
+        <result column="customer_tel" jdbcType="VARCHAR" property="customerTel" />
+        <result column="state" jdbcType="CHAR" property="state" />
+        <result column="order_desc" jdbcType="VARCHAR" property="orderDesc" />
+        <collection property="orderDetailInfoList"  ofType="com.threewater.webserver.webtemplate.po.OrderDetailInfo"
+                    select="findDetailByOrderId" column="{orderId=order_Id}">
+        </collection>
+    </resultMap>
+    <sql id="Base_Column_List">
+        order_Id, order_date, user_Id, customer_name, total_price, pay_type, pay_date, customer_tel,
+        state, order_desc
+    </sql>
+    <sql id="Detail_Column_List">
+         order_detail_id, order_id, prod_id, amount, cur_price
+    </sql>
+    <select id="findByOrderId" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from order_info
+        where order_Id = #{orderId,jdbcType=VARCHAR}
+    </select>
+    <select id="findDetailByOrderId" parameterType="java.lang.String" resultType="com.threewater.webserver.webtemplate.po.OrderDetailInfo">
+        select
+        <include refid="Detail_Column_List"/>
+        from order_detail_info
+        where order_id = #{orderId}
+    </select>
+</mapper>
