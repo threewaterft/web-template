@@ -29,7 +29,7 @@
         from product_info i, product_store_info w, prod_type_info t
         where i.prod_id = w.prod_id and i.prod_type_id = t.prod_type_id and w.wh_id = #{wareHouseId}
     </select>
-    <select id="queryByProdId" parameterType="java.lang.String" resultType="BaseResultMap">
+    <select id="queryByProdId" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from product_info i, product_store_info w, prod_type_info t
