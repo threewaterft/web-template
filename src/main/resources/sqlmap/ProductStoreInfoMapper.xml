@@ -23,6 +23,10 @@
     delete from product_store_info
     where prod_store_id = #{prodStoreId,jdbcType=VARCHAR}
   </delete>
+  <delete id="deleteByProdId" parameterType="java.lang.String">
+    delete from product_store_info
+    where prod_id = #{prodId,jdbcType=VARCHAR}
+  </delete>
   <insert id="insert" parameterType="com.threewater.webserver.webtemplate.po.ProductStoreInfo">
     insert into product_store_info (prod_store_id, wh_id, prod_pos, 
       user_id, prod_amount, unit, 

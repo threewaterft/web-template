@@ -96,7 +96,7 @@ public class WeChatAuthenticationProvider implements AuthenticationProvider {
            //TO-DO 用户已经注册过，获取其相应的权限，构造一个UsernamePasswordAuthenticationToken
            List<GrantedAuthority> authorities = new ArrayList<>();
            List<RoleInfo> roleInfos = userInfo.getRoleInfoList();
-           logger.info("roleInfos is {}", JSON.toJSONString(roleInfos));
+//           logger.info("roleInfos is {}", JSON.toJSONString(roleInfos));
            for(RoleInfo roleInfo: roleInfos){
                authorities.add(new SimpleGrantedAuthority(roleInfo.getRoleName()));
            }

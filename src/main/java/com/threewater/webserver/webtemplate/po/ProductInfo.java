@@ -19,6 +19,20 @@ public class ProductInfo {
 
     private Date joinTime;
 
+    public ProductInfo() {
+    }
+
+    public ProductInfo(String prodId, String prodName, String prodTypeId, Double singlePrice, String thImg, String img, String prodDesc, Date joinTime) {
+        this.prodId = prodId;
+        this.prodName = prodName;
+        this.prodTypeId = prodTypeId;
+        this.singlePrice = singlePrice;
+        this.thImg = thImg;
+        this.img = img;
+        this.prodDesc = prodDesc;
+        this.joinTime = joinTime;
+    }
+
     public String getProdId() {
         return prodId;
     }

@@ -5,6 +5,8 @@ import com.threewater.webserver.webtemplate.po.ProductStoreInfo;
 public interface ProductStoreInfoMapper {
     int deleteByPrimaryKey(String prodStoreId);
 
+    int deleteByProdId(String prodId);
+
     int insert(ProductStoreInfo record);
 
     int insertSelective(ProductStoreInfo record);

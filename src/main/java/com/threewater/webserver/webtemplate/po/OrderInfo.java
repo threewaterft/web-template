@@ -23,6 +23,22 @@ public class OrderInfo {
 
     private String orderDesc;
 
+    public OrderInfo() {
+    }
+
+    public OrderInfo(String orderId, Date orderDate, String userId, String customerName, Double totalPrice, String payType, Date payDate, String customerTel, String state, String orderDesc) {
+        this.orderId = orderId;
+        this.orderDate = orderDate;
+        this.userId = userId;
+        this.customerName = customerName;
+        this.totalPrice = totalPrice;
+        this.payType = payType;
+        this.payDate = payDate;
+        this.customerTel = customerTel;
+        this.state = state;
+        this.orderDesc = orderDesc;
+    }
+
     public String getOrderId() {
         return orderId;
     }

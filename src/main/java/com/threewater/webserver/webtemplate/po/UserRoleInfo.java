@@ -7,6 +7,15 @@ public class UserRoleInfo {
 
     private String roleId;
 
+    public UserRoleInfo() {
+    }
+
+    public UserRoleInfo(String userRoleId, String userId, String roleId) {
+        this.userRoleId = userRoleId;
+        this.userId = userId;
+        this.roleId = roleId;
+    }
+
     public String getUserRoleId() {
         return userRoleId;
     }

@@ -19,7 +19,7 @@ public class ResultBean implements Serializable {
 
     public ResultBean() {}
 
-    public ResultBean(String status, String code, String msg, String data){
+    public ResultBean(String status, String code, String msg, Object data){
         this.status = status;
         this.code = code;
         this.msg = msg;
@@ -34,7 +34,7 @@ public class ResultBean implements Serializable {
         return getFailRes("01", "-1", msg);
     }
 
-    public static ResultBean getSuccessRes(String data){
+    public static ResultBean getSuccessRes(Object data){
         return new ResultBean("00", "0", "", data);
     }
 

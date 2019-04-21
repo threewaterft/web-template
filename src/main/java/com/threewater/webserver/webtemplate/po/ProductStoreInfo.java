@@ -15,6 +15,19 @@ public class ProductStoreInfo {
 
     private String prodId;
 
+    public ProductStoreInfo() {
+    }
+
+    public ProductStoreInfo(String prodStoreId, String whId, String prodPos, String userId, Integer prodAmount, String unit, String prodId) {
+        this.prodStoreId = prodStoreId;
+        this.whId = whId;
+        this.prodPos = prodPos;
+        this.userId = userId;
+        this.prodAmount = prodAmount;
+        this.unit = unit;
+        this.prodId = prodId;
+    }
+
     public String getProdStoreId() {
         return prodStoreId;
     }
