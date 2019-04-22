@@ -36,6 +36,10 @@ public class OrderServiceImpl implements OrderService {
         return orderInfoVoMapper.findDetailByOrderId(orderId);
     }
 
+    public List<OrderInfoVo> findAllOrders(){
+        return orderInfoVoMapper.findAllOrders();
+    }
+
     @Override
     @Transactional
     public int deleteByOrderId(String orderId) {

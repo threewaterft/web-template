@@ -21,6 +21,7 @@ import java.util.stream.Collectors;
 public class TokenAuthServiceImpl implements TokenAuthService {
     private static final Logger logger = LoggerFactory.getLogger(TokenAuthServiceImpl.class);
     private static final String AUTHORITIES_KEY = "auth";
+    private static final String USERID = "userId";
     private String secretKey;//签名密钥
     private long tokenValidityInMilliseconds;//失效日期
     private long tokenValidityInMillisecondsForRememberMe;//（记住我）失效日期
@@ -50,6 +51,7 @@ public class TokenAuthServiceImpl implements TokenAuthService {
         return tokenPrefix+Jwts.builder()                                   //创建Token令牌
                 .setSubject(authentication.getName())           //设置面向用户
                 .claim(AUTHORITIES_KEY,authorities)             //添加权限属性
+                .claim(USERID, ((User)authentication.getPrincipal()).getPassword())
                 .setExpiration(validity)                        //设置失效时间
                 .signWith(SignatureAlgorithm.HS512,secretKey)   //生成签名
                 .compact();
@@ -69,7 +71,8 @@ public class TokenAuthServiceImpl implements TokenAuthService {
                         .map(SimpleGrantedAuthority::new)
                         .collect(Collectors.toList());//将元素转换为GrantedAuthority接口集合
         User principal = new User(claims.getSubject(), "", authorities);
-        return new UsernamePasswordAuthenticationToken(principal, "", authorities);
+        String userId = claims.get(USERID).toString();
+        return new UsernamePasswordAuthenticationToken(principal, userId, authorities);
     }
 
     @Override

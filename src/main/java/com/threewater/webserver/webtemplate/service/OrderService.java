@@ -10,6 +10,8 @@ public interface OrderService {
 
     List<OrderDetailInfo> findDetailByOrderId(String orderId);
 
+    List<OrderInfoVo> findAllOrders();
+
     int deleteByOrderId(String orderId);
 
     int updateOrderInfo(OrderInfoVo orderInfoVo);

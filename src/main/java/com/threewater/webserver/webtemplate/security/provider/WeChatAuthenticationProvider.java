@@ -84,9 +84,10 @@ public class WeChatAuthenticationProvider implements AuthenticationProvider {
                    userInfoMap.getString(AVATAR_URL),String.valueOf(userInfoMap.getIntValue(GENDER)),userInfoMap.getString(COUNTRY),userInfoMap.getString(NICK_NAME),
                    userInfoMap.getString(LANGUAGE),userInfoMap.getString(PROVINCE),new Date());
 //           logger.info("+++{}",JsonUtil.obj2str(loginUserVo.buildUserInfo()));
-           if(weChatUserServiceImpl.rgstUser(loginUserVo.buildUserInfo())>0){
+           UserInfo newUserInfo = loginUserVo.buildUserInfo();
+           if(weChatUserServiceImpl.rgstUser(newUserInfo)>0){
                List<GrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority("ROLE_GUEST"));
-               User user = new User(loginUserVo.getWxNickname(),"",authorities);
+               User user = new User(loginUserVo.getWxNickname(),newUserInfo.getUserId(),authorities);
                return new UsernamePasswordAuthenticationToken(user,authentication.getCredentials(),authorities);
            }else{
                //TO-DO 获取这个异常处理

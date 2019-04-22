@@ -35,4 +35,9 @@
         from order_detail_info
         where order_id = #{orderId}
     </select>
+    <select id="findAllOrders" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from order_info
+    </select>
 </mapper>

@@ -9,4 +9,6 @@ public interface OrderInfoVoMapper {
     OrderInfoVo findByOrderId(String orderId);
 
     List<OrderDetailInfo> findDetailByOrderId(String orderId);
+
+    List<OrderInfoVo> findAllOrders();
 }

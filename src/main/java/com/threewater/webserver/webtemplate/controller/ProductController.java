@@ -2,11 +2,14 @@ package com.threewater.webserver.webtemplate.controller;
 
 import com.threewater.webserver.webtemplate.po.ProductStoreInfo;
 import com.threewater.webserver.webtemplate.service.ProductService;
+import com.threewater.webserver.webtemplate.service.TokenAuthService;
 import com.threewater.webserver.webtemplate.util.ResultBean;
 import com.threewater.webserver.webtemplate.vo.ProductInfoVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,14 +18,19 @@ import java.util.List;
 @RestController
 public class ProductController {
 
-    private static final Logger logger = LoggerFactory.getLogger(ProductStoreInfo.class);
+    private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
 
+    @Autowired
+    private TokenAuthService tokenAuthService;
 
     @Autowired
     private ProductService productService;
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ResultBean addProd(@RequestBody ProductInfoVo productInfoVo){
+    public ResultBean addProd(@RequestBody ProductInfoVo productInfoVo, @RequestHeader("Authorization") String token){
+        Authentication authentication = tokenAuthService.getAuthentication(token);
+        String userId = ((User)authentication.getPrincipal()).getPassword();
+        productInfoVo.setUserId(userId);
         if(productService.addProdInfo(productInfoVo) > 0){
             return ResultBean.getSuccessRes("添加商品成功！");
         }else{
@@ -40,11 +48,14 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/mod", method = RequestMethod.PUT)
-    public ResultBean modifyProd(@RequestBody ProductInfoVo productInfoVo){
+    public ResultBean modifyProd(@RequestBody ProductInfoVo productInfoVo, @RequestHeader("Authorization") String token){
+        Authentication authentication = tokenAuthService.getAuthentication(token);
+        String userId = ((User)authentication.getPrincipal()).getPassword();
+        productInfoVo.setUserId(userId);
         if(productService.updateProdInfo(productInfoVo) > 0){
-            return ResultBean.getSuccessRes("删除商品成功！");
+            return ResultBean.getSuccessRes("修改商品成功！");
         }else{
-            return ResultBean.getDefaultFailRes("删除商品失败！");
+            return ResultBean.getDefaultFailRes("修改商品失败！");
         }
     }
 
