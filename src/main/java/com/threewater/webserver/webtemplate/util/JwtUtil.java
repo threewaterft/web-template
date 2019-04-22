@@ -55,7 +55,7 @@ public class JwtUtil {
                     .getBody();
         }catch (Exception e){
             log.debug("validate is token error ", e);
-            throw new CommonException("TWFT0003", "token解析异常", e);
+            throw new CommonException("TWFT0003", e, "token解析异常");
         }
         return body;
     }

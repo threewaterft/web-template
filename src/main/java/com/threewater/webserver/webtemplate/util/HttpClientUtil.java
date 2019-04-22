@@ -44,7 +44,7 @@ public class HttpClientUtil {
             // 释放链接
             response.close();
         }catch (Exception e){
-            throw new CommonException("TWFT0003", "POSTq请求发送失败", e);
+            throw new CommonException("TWFT0003", e, "POSTq请求发送失败");
         }
 
         return result;
@@ -75,7 +75,7 @@ public class HttpClientUtil {
             // 释放链接
             response.close();
         }catch(Exception e){
-            throw new CommonException("TWFT0003", "GET请求发送失败", e);
+            throw new CommonException("TWFT0003", e, "GET请求发送失败");
         }
 
         return result;

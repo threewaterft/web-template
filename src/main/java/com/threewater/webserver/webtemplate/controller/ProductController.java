@@ -1,5 +1,6 @@
 package com.threewater.webserver.webtemplate.controller;
 
+import com.threewater.webserver.webtemplate.exception.CommonException;
 import com.threewater.webserver.webtemplate.po.ProductStoreInfo;
 import com.threewater.webserver.webtemplate.service.ProductService;
 import com.threewater.webserver.webtemplate.service.TokenAuthService;
@@ -8,11 +9,16 @@ import com.threewater.webserver.webtemplate.vo.ProductInfoVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 @RequestMapping("/prod")
 @RestController
@@ -26,15 +32,36 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
+    @Value("${custom.upload.path:/home/threewater/")
+    private String filePath;
+
     @RequestMapping(value = "/add", method = RequestMethod.POST)
-    public ResultBean addProd(@RequestBody ProductInfoVo productInfoVo, @RequestHeader("Authorization") String token){
+    public ResultBean addProd(@RequestParam("img") MultipartFile img, @RequestParam("thImg") MultipartFile thImg,
+                              ProductInfoVo productInfoVo, @RequestHeader("Authorization") String token){
         Authentication authentication = tokenAuthService.getAuthentication(token);
         String userId = ((User)authentication.getPrincipal()).getPassword();
         productInfoVo.setUserId(userId);
-        if(productService.addProdInfo(productInfoVo) > 0){
-            return ResultBean.getSuccessRes("添加商品成功！");
-        }else{
-            return ResultBean.getDefaultFailRes("添加商品失败！");
+
+        String oriName = img.getOriginalFilename();
+        String fileName = UUID.randomUUID() + oriName.substring(oriName.lastIndexOf("."));
+        File imgDest = new File(filePath + userId + File.pathSeparator+ fileName);
+
+        String oriThImgName = img.getOriginalFilename();
+        String thImgFileName = UUID.randomUUID() + oriThImgName.substring(oriThImgName.lastIndexOf("."));
+        File thImgDest = new File(filePath + userId + File.pathSeparator+ thImgFileName);
+
+        try {
+            img.transferTo(imgDest);
+            thImg.transferTo(thImgDest);
+            productInfoVo.setImg(imgDest.getCanonicalPath());
+            productInfoVo.setThImg(thImgDest.getCanonicalPath());
+            if(productService.addProdInfo(productInfoVo) > 0){
+                return ResultBean.getSuccessRes("添加商品成功！");
+            }else{
+                return ResultBean.getDefaultFailRes("添加商品失败！");
+            }
+        } catch (Exception e) {
+            throw new CommonException("TWFT0007", e, e.getMessage());
         }
     }
 

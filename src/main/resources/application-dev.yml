@@ -65,7 +65,7 @@ server:
 custom:
   upload:
     #自定义文件上传路径
-    path: C:\Users\CH\IdeaProjects\bootproject\src\main\resources\upload\
+    path: H:\upload\
     #自定义单个文件上传最大值，单位M
     maxFileSize: 10
     #自定义总文件上传最大值，单位M
