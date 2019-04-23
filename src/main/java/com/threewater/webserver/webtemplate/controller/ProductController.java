@@ -1,5 +1,7 @@
 package com.threewater.webserver.webtemplate.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.threewater.webserver.webtemplate.exception.CommonException;
 import com.threewater.webserver.webtemplate.po.ProductStoreInfo;
 import com.threewater.webserver.webtemplate.service.ProductService;
@@ -97,11 +99,13 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/qryAll", method = RequestMethod.GET)
-    public ResultBean qryAll(){
-        //TO-DO 增加翻页
+    public ResultBean qryAll(int pageNum, int pageSize){
+        //使用分页插件,核心代码就这一行
+        PageHelper.startPage(pageNum, pageSize);
         List<ProductInfoVo> productInfoVoList = productService.queryProdInfosByWhId("1");
         if(productInfoVoList != null){
-            return ResultBean.getSuccessRes(productInfoVoList);
+            PageInfo<ProductInfoVo> productPageInfo = new PageInfo<>(productInfoVoList);
+            return ResultBean.getSuccessRes(productPageInfo);
         }else{
             return ResultBean.getDefaultFailRes("未查询到商品！");
         }

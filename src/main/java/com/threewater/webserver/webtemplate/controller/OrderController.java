@@ -1,9 +1,12 @@
 package com.threewater.webserver.webtemplate.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.threewater.webserver.webtemplate.service.OrderService;
 import com.threewater.webserver.webtemplate.service.TokenAuthService;
 import com.threewater.webserver.webtemplate.util.ResultBean;
 import com.threewater.webserver.webtemplate.vo.OrderInfoVo;
+import com.threewater.webserver.webtemplate.vo.ProductInfoVo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,13 +71,15 @@ public class OrderController {
     }
 
     @GetMapping(value = "/qryAll")
-    public ResultBean qryAll(){
-        //TO-DO 增加翻页
+    public ResultBean qryAll(int pageNum, int pageSize){
+        //使用分页插件,核心代码就这一行
+        PageHelper.startPage(pageNum, pageSize);
         List<OrderInfoVo> orderInfoVoList = orderService.findAllOrders();
         if(orderInfoVoList != null){
-            return ResultBean.getSuccessRes(orderInfoVoList);
+            PageInfo<OrderInfoVo> orderPageInfo = new PageInfo<>(orderInfoVoList);
+            return ResultBean.getSuccessRes(orderPageInfo);
         }else{
-            return ResultBean.getDefaultFailRes("未查询到商品！");
+            return ResultBean.getDefaultFailRes("未查询到订单！");
         }
     }
 }
