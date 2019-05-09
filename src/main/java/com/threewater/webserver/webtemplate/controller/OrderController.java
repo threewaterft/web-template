@@ -30,7 +30,7 @@ public class OrderController {
     @PostMapping(value = "/add")
     public ResultBean addOrder(@RequestBody OrderInfoVo orderInfoVo, @RequestHeader("Authorization") String token){
         Authentication authentication = tokenAuthService.getAuthentication(token);
-        String userId = ((User)authentication.getPrincipal()).getPassword();
+        String userId = (String) authentication.getDetails();
         orderInfoVo.setUserId(userId);
         if(orderService.addOrderInfo(orderInfoVo) > 0){
             return ResultBean.getSuccessRes("下单成功！");
@@ -51,7 +51,7 @@ public class OrderController {
     @PutMapping(value = "/mod")
     public ResultBean modifyOrder(@RequestBody OrderInfoVo orderInfoVo, @RequestHeader("Authorization") String token){
         Authentication authentication = tokenAuthService.getAuthentication(token);
-        String userId = ((User)authentication.getPrincipal()).getPassword();
+        String userId = (String) authentication.getDetails();
         orderInfoVo.setUserId(userId);
         if(orderService.updateOrderInfo(orderInfoVo) > 0){
             return ResultBean.getSuccessRes("修改订单成功！");

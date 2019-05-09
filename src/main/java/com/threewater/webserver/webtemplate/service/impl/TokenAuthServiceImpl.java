@@ -51,7 +51,7 @@ public class TokenAuthServiceImpl implements TokenAuthService {
         return tokenPrefix+Jwts.builder()                                   //创建Token令牌
                 .setSubject(authentication.getName())           //设置面向用户
                 .claim(AUTHORITIES_KEY,authorities)             //添加权限属性
-                .claim(USERID, ((User)authentication.getPrincipal()).getPassword())
+                .claim(USERID, authentication.getDetails())
                 .setExpiration(validity)                        //设置失效时间
                 .signWith(SignatureAlgorithm.HS512,secretKey)   //生成签名
                 .compact();
@@ -72,7 +72,9 @@ public class TokenAuthServiceImpl implements TokenAuthService {
                         .collect(Collectors.toList());//将元素转换为GrantedAuthority接口集合
         User principal = new User(claims.getSubject(), "", authorities);
         String userId = claims.get(USERID).toString();
-        return new UsernamePasswordAuthenticationToken(principal, userId, authorities);
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(principal, "", authorities);
+        authenticationToken.setDetails(userId);
+        return authenticationToken;
     }
 
     @Override

@@ -87,8 +87,10 @@ public class WeChatAuthenticationProvider implements AuthenticationProvider {
            UserInfo newUserInfo = loginUserVo.buildUserInfo();
            if(weChatUserServiceImpl.rgstUser(newUserInfo)>0){
                List<GrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority("ROLE_GUEST"));
-               User user = new User(loginUserVo.getWxNickname(),newUserInfo.getUserId(),authorities);
-               return new UsernamePasswordAuthenticationToken(user,authentication.getCredentials(),authorities);
+               User user = new User(loginUserVo.getWxNickname(),"",authorities);
+               UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(user, authentication.getCredentials(), authorities);
+               authenticationToken.setDetails(newUserInfo.getUserId());
+               return authenticationToken;
            }else{
                //TO-DO 获取这个异常处理
                throw new UsernameNotFoundException("用户注册失败");
